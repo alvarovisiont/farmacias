@@ -78,9 +78,11 @@
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <p>¡<b>Farmacia</b> {{ Auth::user()->nombre_farmacia }}!&nbsp;&nbsp;<img src="{{ asset('img/logo/').'/'.$config->logo }}" alt="sin logo :(" width="30px"></p>
-                    <p>Director: {{ $config->director }}</p>
-                    <p>Teléfono: {{ $config->director_number }}</p>
+                    @if(Auth::user()->nivel == 2)
+                      <p>¡<b>Farmacia</b> {{ Auth::user()->nombre_farmacia }}!&nbsp;&nbsp; <img src="{{ asset('img/logo/').'/'.$config->logo }}" alt="sin logo :(" width="30px"></p>
+                      <p>Director: {{ $config->director }}</p>
+                      <p>Teléfono: {{ $config->director_number }}</p>
+                    @endif
                   </li>
                   <!-- Menu Footer-->
                   <li class="user-footer">

@@ -10,7 +10,6 @@ use App\DetailSale;
 use App\Stocktaking;
 use App\Sale;
 use App\Buy;
-use App\Config;
 
 class HomeController extends Controller
 {
@@ -53,10 +52,8 @@ class HomeController extends Controller
 
         $alert_products = Stocktaking::where('quantity','<=', 50)->get();
 
-        $config = Config::where('user_id','=',Auth::user()->id)->first();
 
-
-        $datos = ['sale' => $sale, 'buy' => $buy, 'stock' => $stock, 'total_balance' => $total_balance, 'total_medicinas' => $total_medicinas, 'alert_products' => $alert_products, 'config' => $config];
+        $datos = ['sale' => $sale, 'buy' => $buy, 'stock' => $stock, 'total_balance' => $total_balance, 'total_medicinas' => $total_medicinas, 'alert_products' => $alert_products];
 
         return view('home.home')->with($datos);
     }
