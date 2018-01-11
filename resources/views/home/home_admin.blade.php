@@ -107,6 +107,34 @@
 			</div>
 		</div>
 	</div>
+	<div class="row no-gutters">
+		<h3 class="text-center"><span class="subrayado_rojo">Productos del Inventario en alerta</span></h3>
+		<br/>
+		<table class="table table-bordered table-hover" id="table">
+			<thead>
+				<tr>
+					<th class="text-center">Farmacia</th>
+					<th class="text-center">Producto</th>
+					<th class="text-center">Proveedor</th>
+					<th class="text-center">Cantidad</th>
+					<th class="text-center">Municipio</th>
+					<th class="text-center">Parroquia</th>
+				</tr>
+			</thead>
+			<tbody class="text-center">
+				@foreach($alert_products as $row)
+					<tr class="alert alert-danger">
+						<td>{{ $row->user_stock->nombre_farmacia }}</td>
+						<td>{{ $row->product }}</td>
+						<td>{{ $row->provider_product->name }}</td>
+						<td>{{ $row->quantity }}</td>
+						<td>{{ $row->user_stock->municipios()->municipio }}</td>
+						<td>{{ $row->user_stock->parroquias()->parroquia }}</td>
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
+	</div>
 @endsection
 @section('script')
 	<script src="{{ asset('js/amcharts.js') }}"></script>

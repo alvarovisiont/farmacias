@@ -33,14 +33,19 @@ class User extends Authenticatable
         return $this->hasOne('App\Estado','id','estado');
     }
 
-    public function municipios($estado)
+    public function municipios()
     {
-        return  $this->hasOne('App\Municipio','id_municipio','municipio')->where('id_estado','=',$estado)->first();   
+
+        $municipio = $this->hasOne('App\Municipio','id_municipio','municipio')->where('id_estado','=',$this->estado)->first(); 
+        
+        return $municipio;
+
     }
 
-    public function parroquias($estado,$municipio)
+    public function parroquias()
     {
-        return $this->hasOne('App\Parroquia','id','parroquia')->where([ ['id_estado','=',$estado],['id_municipio','=',$municipio] ])->first();      
+
+        return $this->hasOne('App\Parroquia','id','parroquia')->where([ ['id_estado','=',$this->estado],['id_municipio','=',$this->municipio] ])->first();      
     }
 
     public function authorized()

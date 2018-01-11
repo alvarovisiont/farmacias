@@ -30,11 +30,19 @@ class HomeController extends Controller
      */
     public function index_admin()
     {
-        $sale = Sale::where('users_id','=',Auth::user()->id)->count();
-        $buy  = Buy::where('user_id','=',Auth::user()->id)->count();
-        $stock = Stocktaking::where('users_id','=',Auth::user()->id)->count();
+        $sale = Sale::count();
+        $buy  = Buy::count();
+        $stock = Stocktaking::count();
+        
+        $sql = "SUM(quantity) as total, (SELECT product from stocktakings where products_id = id) as product";
 
-        return view('home.home_admin');
+        $total_medicinas = DB::table('detail_sales')->selectRaw($sql)->whereRaw(" MONTH(created_at) = 12 and YEAR(created_at) = 2017 ")->groupBy('product')->limit(3)->get();
+
+        $alert_products = Stocktaking::where('quantity','<=', 50)->get();
+
+        $datos = ['sale' => $sale, 'buy' => $buy, 'stock' => $stock,'total_medicinas' => $total_medicinas, 'alert_products' => $alert_products];
+
+        return view('home.home_admin')->with($datos);
     }
 
     public function index_farmacia()

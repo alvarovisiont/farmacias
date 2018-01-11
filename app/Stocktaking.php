@@ -33,4 +33,9 @@ class Stocktaking extends Model
     {
         return $this->hasOne('App\ConfigCurrency','id','config_currencies_iva_id');
     }
+
+    public function user_stock()
+    {
+        return $this->hasOne('App\User','id','users_id');
+    }
 }

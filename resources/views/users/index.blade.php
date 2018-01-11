@@ -58,8 +58,8 @@
                             <td>{{ $row->nombre_farmacia }}</td>
                             <td>{{ $row->number }}</td>
                             <td>{{ $row->estados->estado }}</td>
-                            <td>{{ $row->municipios($row->estado)->municipio }}</td>
-                            <td>{{ $row->parroquias($row->estado,$row->municipio)->parroquia }}</td>
+                            <td>{{ $row->municipios()->municipio }}</td>
+                            <td>{{ $row->parroquias()->parroquia }}</td>
                             <td>
                                 <a href="{{ url('users/'.$row->id.'/edit') }}" class="letras-medianas" title="Editar"><i class="fa fa-edit"></i></a>
                                 <a href="#" class="eliminar letras-medianas" title="Eliminar" data-eliminar = "{{$row->id}}"><i class="fa fa-trash"></i></a>
