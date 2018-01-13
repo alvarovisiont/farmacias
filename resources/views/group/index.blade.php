@@ -34,7 +34,7 @@
         <div class="box-header with-border">
               <h2 class="box-title"><i class="fa fa-archive"></i>&nbsp;&nbsp;Grupos Registrados</h2>
               <div class="pull-right">
-                   <a href="{{route('group.create')}}" class="btn btn-warning btn-flat btn-md pull-right">Registrar Grupo&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
+                    <a href="{{route('group.create')}}" class="btn btn-warning btn-flat btn-md pull-right">Registrar Grupo&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
               </div>
         </div>
         <div class="box-body">

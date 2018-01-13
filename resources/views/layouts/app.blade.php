@@ -17,6 +17,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('css/AdminLTE.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('plugins/datatables/dataTables.responsive.css')}}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}">
@@ -166,6 +167,7 @@
     <script src="{{asset('js/app.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('plugins/datatables/dataTables.bootstrap.js')}}"></script>
+    <script src="{{asset('plugins/datatables/dataTables.responsive.js')}}"></script>
      <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
      <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.es.min.js')}}"></script>
     
@@ -174,7 +176,8 @@
         $('div.alert').not('.alert-important').delay(2000).slideUp(300);
 
         $('#table').dataTable({
-          'language' : {"url" : "json/esp.json"}
+          'language' : {"url" : "json/esp.json"},
+          "responsive": true, /*  Para activar el diseño responsive */
         });
 
          $('.fecha').datepicker({

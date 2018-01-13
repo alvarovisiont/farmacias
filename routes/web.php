@@ -42,8 +42,8 @@ Auth::routes();
 // ================== || StockTaking || ==================================== //
 
 	Route::resource('stocktaking','StockTakingController');
-	Route::get('stocktaking_pdf','StockTakingController@pdf_stocktaking')->name('stocktaking.pdf');
-	Route::get('stocktaking_excel','StockTakingController@excel_stocktaking')->name('stocktaking.excel');
+	Route::get('stocktaking/pdf/{id}','StockTakingController@pdf_stocktaking')->name('stocktaking.pdf');
+	Route::get('stocktaking/excel/{id}','StockTakingController@excel_stocktaking')->name('stocktaking.excel');
 	Route::get('search_products/all','StockTakingController@allproducts')->name('search.products.all');
 
 // ================== || Trademark || ==================================== //
@@ -79,3 +79,16 @@ Auth::routes();
 	Route::get('/buy/stored/temp','BuyController@stored_temp')->name('buy.save.temp');
 	Route::post('/buy/stored/remove/temp','BuyController@stored_temp_remove')->name('buys.products.remove.temp');
 	Route::delete('/buy/{id}','BuyController@destroy')->name('buy.destroy');
+
+	
+// ================== || Administrador || ==================================== //
+
+	Route::get('/admin/stocktaking','AdminController@stocktaking')->name('admin.stocktaking');
+	Route::get('/admin/stocktaking/pharmacy','AdminController@stocktaking_pharmacy')->name('admin.stocktaking.pharmacy');
+	Route::get('/admin/stocktaking/pharmacy/view/{id}','AdminController@stocktaking_pharmacy_view')->name('admin.stocktaking.pharmacy.view');
+
+	Route::get('/admin/medicines','AdminController@medicines')->name('admin.medicines');
+	Route::get('/admin/medicines/filter','AdminController@medicines_filter')->name('admin.medicines.filter');
+	
+	
+	

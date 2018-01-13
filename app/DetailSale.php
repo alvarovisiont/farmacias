@@ -13,4 +13,9 @@ class DetailSale extends Model
     {
     	return $this->hasOne('App\Stocktaking','id','products_id');
     }
+
+    public function sale()
+    {
+    	return $this->belongsTo('App\Sale','sales_id','id');
+    }
 }

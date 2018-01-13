@@ -25,8 +25,10 @@ class CreateStocktakingsTable extends Migration
             $table->double('price',15,2);
             $table->double('buying_price_provider',15,2);
             $table->date('buying_date');
+            
             $table->integer('config_currencies_iva_id')->default(0);
             $table->integer('config_currencies_discount_id')->default(0);
+            $table->date('date_of_expense');
             
             $table->foreign('providers_id')->references('id')->on('providers');
             $table->foreign('trademarks_id')->references('id')->on('trademarks');

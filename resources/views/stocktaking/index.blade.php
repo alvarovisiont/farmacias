@@ -31,10 +31,10 @@
     </div>
     <div class="row no-gutters">
         <div class="col-md-offset-6 col-sm-offset-6 col-md-2 col-sm-2">
-            <a href="{{ route('stocktaking.pdf') }}" target="_blank" class="btn btn-primary btn-outline">Generar PDF &nbsp;<i class="fa fa-file-pdf-o"></i></a>
+            <a href="{{ url('stocktaking/pdf/'.$user_id) }}" target="_blank" class="btn btn-primary btn-outline">Generar PDF &nbsp;<i class="fa fa-file-pdf-o"></i></a>
         </div>
         <div class="col-md-3 col-sm-3">
-            <a href="{{ route('stocktaking.excel') }}" class="btn btn-success btn-outline">Generar Excel &nbsp;<i class="fa fa-file-excel-o"></i></a>
+            <a href="{{ url('stocktaking/excel/'.$user_id) }}" class="btn btn-success btn-outline">Generar Excel &nbsp;<i class="fa fa-file-excel-o"></i></a>
         </div>
     </div>
     <br />
@@ -43,7 +43,9 @@
         <div class="box-header with-border">
               <h2 class="box-title"><i class="fa fa-truck"></i>&nbsp;&nbsp;Productos Registrados</h2>
               <div class="pull-right">
-                   <a href="{{route('stocktaking.create')}}" class="btn btn-danger btn-flat btn-md pull-right">Registrar Productos&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
+                    @if(Auth::user()->nivel > 1)
+                        <a href="{{route('stocktaking.create')}}" class="btn btn-danger btn-flat btn-md pull-right">Registrar Productos&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
+                    @endif
               </div>
         </div>
         <div class="box-body">

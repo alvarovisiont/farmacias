@@ -14,6 +14,7 @@ use App\Group;
 use App\Trademark;
 use App\ConfigCurrency;
 use App\Config;
+use App\DetailSale;
 
 class StockTakingController extends Controller
 {
@@ -26,8 +27,9 @@ class StockTakingController extends Controller
     {
         //
         $stocktaking = Stocktaking::where('users_id','=',Auth::user()->id)->get();
+        $datos = ['stock' => $stocktaking, 'user_id' => Auth::user()->id];
 
-        return view('stocktaking.index')->with('stock',$stocktaking);
+        return view('stocktaking.index')->with($datos);
 
     }
 
@@ -63,6 +65,7 @@ class StockTakingController extends Controller
         $stock = new StockTaking;
         $stock->fill($request->all());
         $stock->buying_date = date('Y-m-d',strtotime($stock->buying_date));
+        $stock->date_of_expense = date('Y-m-d',strtotime($stock->date_of_expense));
         $stock->users_id = Auth::user()->id;
         $stock->save();
 
@@ -83,8 +86,11 @@ class StockTakingController extends Controller
     {
         //
         $stock = Stocktaking::findOrFail($id);
+        $sales = DetailSale::where('products_id','=',$id)->get();
+        
+        $datos = ['stock' => $stock, 'sales' => $sales];
 
-        return view('stocktaking.show')->with('stock', $stock);
+        return view('stocktaking.show')->with($datos);
     }
 
     /**
@@ -121,6 +127,7 @@ class StockTakingController extends Controller
         $stock = StockTaking::findOrFail($id);
         $stock->fill($request->all());
         $stock->buying_date = date('Y-m-d',strtotime($stock->buying_date));
+        $stock->date_of_expense = date('Y-m-d',strtotime($stock->date_of_expense));
         $stock->save();
 
         return redirect()->route('stocktaking.index')->with([
@@ -178,11 +185,11 @@ class StockTakingController extends Controller
 
     // ** ============================ // Reportes // ================================== ** //
 
-    public function pdf_stocktaking()
+    public function pdf_stocktaking($id)
     {
         
-        $stock = Stocktaking::where('users_id','=',Auth::user()->id)->get();
-        $config = Config::where('user_id','=',Auth::user()->id)->first();
+        $stock = Stocktaking::where('users_id','=',$id)->get();
+        $config = Config::where('user_id','=',$id)->first();
 
         $datos = ['config' => $config,'stock' => $stock];
 
@@ -195,10 +202,10 @@ class StockTakingController extends Controller
         return $pdf->stream('stocktaking.pdf');
     }
 
-    public function excel_stocktaking()
+    public function excel_stocktaking($id)
     {
         
-        $stock = Stocktaking::where('users_id','=',Auth::user()->id)->get();
+        $stock = Stocktaking::where('users_id','=',$id)->get();
 
         Excel::create('inventario',function($excel) use ($stock){
 

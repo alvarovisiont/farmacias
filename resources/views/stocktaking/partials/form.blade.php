@@ -100,6 +100,10 @@
 		<div class="col-md-4 col-sm-4">
 			<input type="text" id="buying_date" name="buying_date" required="" class="form-control fecha" value="{{$edit ? date('d-m-Y',strtotime($stock->buying_date)) : '' }}">
 		</div>
+		<label for="replace1" class="control-label col-md-2 col-sm-2">Fecha Expensión</label>
+		<div class="col-md-4 col-sm-4">
+			<input type="text" id="date_of_expense" name="date_of_expense" required="" class="form-control fecha" value="{{$edit ? date('d-m-Y',strtotime($stock->date_of_expense)) : '' }}">
+		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-md-4 col-sm-4 col-sm-offset-4 col-md-offset-4">
