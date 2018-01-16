@@ -98,6 +98,7 @@
 	        </div>
 	    </div>
 	</div>
+	@include('partials.flash')
 	<div class="row no-gutters">
 		<div class="col-md-6 col-sm-6">
 			<div id="chartdiv" style="width: 100%;height:380px;font-size: 11px;"></div>
@@ -140,6 +141,38 @@
 		</table>
 	</div>
 
+<!-- modal verificación de contraseña -->
+<div id="modal_password" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header login-header" style="background-color: #3c8dbc; color: white;">
+                <h4 class="modal-title">Reestablecer contraseña por defecto</h4>
+            </div>
+            <form method="POST" id="form_contraseña" action="{{ route('user.change.password') }}">
+            	{{ csrf_field() }}
+	            <div class="modal-body">
+					<div class="form-group row no-gutters">
+						<label for="password" class="control-label col-md-2 col-sm-2 col-md-offset-2 col-sm-offset-2">Nueva Contraseña</label>
+						<div class="col-md-4 col-sm-4">
+							<input type="text" id="password" name="password" required="" class="form-control">
+						</div>
+					</div>
+					<div class="form-group row no-gutters">
+						<label for="repeat_password" class="control-label col-md-2 col-sm-2 col-md-offset-2 col-sm-offset-2">Repita Contraseña</label>
+						<div class="col-md-4 col-sm-4">
+							<input type="text" id="repeat_password" name="repeat_password" required="" class="form-control">
+						</div>
+					</div>
+	            </div><!-- fin modal-body -->
+	            <div class="modal-footer" style="">
+	                <button type="submit" class="btn btn-success">Grabar</button>
+	            </div>
+			</form>
+        </div><!-- fin modal-content -->
+    </div><!-- fin modal-dialog -->
+</div> <!-- fin modal -->
+
 @endsection
 @section('script')
 	<script src="{{ asset('js/amcharts.js') }}"></script>
@@ -150,8 +183,28 @@
 
 		$(function(){
 
-			var objetos = [{"categoria": "Debe", "saldo": {{ $total_balance[0]->total_spend }}, "color": "#BDBDBD"},{
-				"categoria": "Haber", "saldo": {{ $total_balance[0]->total_sale }}, "color": "#8A0829"
+			// variable para verificar si el usuario reestablecio su contraseña
+			var status_user = {{ Auth::user()->status }}
+
+			status_user > 0 ? '' : $('#modal_password').modal('show')
+
+			$('#form_contraseña').submit(function(e) {
+
+				var pass = $('#password').val(),
+					repeat_pass = $('#repeat_password').val()
+
+				if(pass !== repeat_pass)
+				{
+					alert('Las contraseñas no coinciden')	
+
+					return false;
+				} 
+
+			});
+
+
+			var objetos = [{"categoria": "Debe", "saldo": '{{ $total_balance->total_spend }}', "color": "#BDBDBD"},{
+				"categoria": "Haber", "saldo": '{{ $total_balance->total_sale }}', "color": "#8A0829"
 			}]
 
 			var chart = AmCharts.makeChart( "chartdiv", {

@@ -1,18 +1,38 @@
+<?php
+$dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+$fecha = $dias[date('w',strtotime("- 5 hour"))]." ".date('d',strtotime("- 5 hour"))." de ".$meses[date('n')-1]. " del ".date('Y');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+	<style>
+		.logo
+		{
+			float: left;
+		}
+		.clear{
+		clear: both;
+		}
+	</style>
 </head>
 <body>
+	
+	<div>
+		@if($config)
+			<img src="{{ asset('img/logo/'.$config->logo) }}" alt="" width="10%" height="40px">
+		@endif	
+	</div>
+	<br/>
+	<b class=""><?php echo $fecha; ?></b>
 
 	<div class="text-center">
-		@if($config)
-			<img src="{{ asset('img/logo/'.$config->logo) }}" alt="" width="100%" height="80px">
-			<br/><br/>
-			{{$config->nombre_farmacia}}
-		@endif
+		<h3>{{$config->nombre_farmacia}}</h3>
 	</div>
 	<br/>
 	<table class="table table-bordered">

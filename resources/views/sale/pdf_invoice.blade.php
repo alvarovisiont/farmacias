@@ -27,10 +27,6 @@ th {     font-size: 13px;     font-weight: bold;     padding: 8px;
 td {    padding: 8px; border-bottom: 1px solid black;
     border-top: 1px solid transparent; }
 
-.logo{
-text-align: right;
-padding: 20px;
-}
 .centrar {
 text-align: center;
 }
@@ -61,7 +57,8 @@ clear: both;
 	<div class="logo">
 		@if($config)
 			@if($config->logo)
-				<img src="{{ asset('img/logo/$config->logo') }}" alt="" width="100px" height="100px" style='float: left; display:inline-block'>
+				<img src="{{ asset('img/logo/'.$config->logo) }}" alt="" width="70px" height="70px" style='float: left; display:inline-block'>
+
 			@endif
 			<h2 class="centrar">{{$config->nombre_farmacia}}</h2>
 		@endif

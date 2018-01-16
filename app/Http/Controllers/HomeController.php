@@ -38,9 +38,17 @@ class HomeController extends Controller
 
         $total_medicinas = DB::table('detail_sales')->selectRaw($sql)->whereRaw(" MONTH(created_at) = 12 and YEAR(created_at) = 2017 ")->groupBy('product')->limit(3)->get();
 
+        $sql = "SELECT * from ( 
+                    SELECT COUNT(sales.id) as total, sales.clients_id, c.* FROM `sales` 
+                    INNER JOIN clients as c ON c.id = sales.clients_id 
+                    GROUP BY clients_id, c.id,c.users_id,c.number, c.cedula,c.name_complete, c.email,c.gender,c.address,c.created_at,c.updated_at 
+                ) as tt ORDER BY tt.total DESC LIMIT 10";
+
+        $max_buyers = DB::select($sql);
+
         $alert_products = Stocktaking::where('quantity','<=', 50)->get();
 
-        $datos = ['sale' => $sale, 'buy' => $buy, 'stock' => $stock,'total_medicinas' => $total_medicinas, 'alert_products' => $alert_products];
+        $datos = ['sale' => $sale, 'buy' => $buy, 'stock' => $stock,'total_medicinas' => $total_medicinas, 'alert_products' => $alert_products,'max_buyers' => $max_buyers];
 
         return view('home.home_admin')->with($datos);
     }
@@ -54,13 +62,13 @@ class HomeController extends Controller
         $buy  = Buy::where('user_id','=',Auth::user()->id)->count();
         $stock = Stocktaking::where('users_id','=',Auth::user()->id)->count();
 
-        $sql = "SUM(total) as total_sale, (SELECT SUM(total) as total from buys) as total_spend";
+        $sql = "SUM(total) as total_sale, (SELECT SUM(total) as total from buys where user_id = ".Auth::user()->id.") as total_spend";
         
-        $total_balance = DB::table('sales')->selectRaw($sql)->whereRaw(" (MONTH(created_at) = 12 and YEAR(created_at) = 2017) and (sales.users_id = ".Auth::user()->id." )" )->get();
+        $total_balance = DB::table('sales')->selectRaw($sql)->whereRaw(" (MONTH(created_at) = $mes_actual and YEAR(created_at) = $año_actual) and (sales.users_id = ".Auth::user()->id." )" )->first();
 
         $sql = "SUM(quantity) as total, (SELECT product from stocktakings where products_id = id) as product";
 
-        $total_medicinas = DB::table('detail_sales')->selectRaw($sql)->whereRaw("( MONTH(created_at) = 12 and YEAR(created_at) = 2017 ) and ( sales_id = (SELECT id from sales where users_id = ".Auth::user()->id." LIMIT 1) )")->groupBy('product')->limit(3)->get();
+        $total_medicinas = DB::table('detail_sales')->selectRaw($sql)->whereRaw("( MONTH(created_at) = $mes_actual and YEAR(created_at) = $año_actual ) and ( sales_id = (SELECT id from sales where users_id = ".Auth::user()->id." LIMIT 1) )")->groupBy('product')->limit(3)->get();
 
         $alert_products = Stocktaking::where([
             ['quantity','<=', 50],

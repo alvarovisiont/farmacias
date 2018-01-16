@@ -17,9 +17,21 @@ class SalesController extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
-        $sales = Sale::where('users_id','=',Auth::user()->id)->get();
+        $sales = "";
+        
+        if(isset($request->user_id))
+        {
+            $id = base64_decode($request->user_id);
+
+            $sales = Sale::where('users_id','=',$id)->get();
+        }
+        else
+        {
+            $sales = Sale::where('users_id','=',Auth::user()->id)->get();
+        }
+
         return view('sale.index')->with('sales',$sales);
     }
 
@@ -27,7 +39,6 @@ class SalesController extends Controller
     {
 
         $sale = Sale::where([
-            ['users_id','=',Auth::user()->id],
             ['id','=',$id]
         ])
         ->first();

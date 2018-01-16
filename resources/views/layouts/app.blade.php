@@ -79,10 +79,13 @@
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    @if(Auth::user()->nivel == 2)
+                    @if(Auth::user()->nivel == 2 && isset($config))
+
                       <p>¡<b>Farmacia</b> {{ Auth::user()->nombre_farmacia }}!&nbsp;&nbsp; <img src="{{ asset('img/logo/').'/'.$config->logo }}" alt="sin logo :(" width="30px"></p>
                       <p>Director: {{ $config->director }}</p>
                       <p>Teléfono: {{ $config->director_number }}</p>
+                    @else
+                      <p>Sin configuración. <a href="{{ route('config.index') }}" style="color: white;">Hacer click ¡aquí! para guardar datos primordiales</a></p>
                     @endif
                   </li>
                   <!-- Menu Footer-->

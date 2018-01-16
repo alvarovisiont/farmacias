@@ -12,12 +12,21 @@
 */
 
 Route::get('/', 'Auth\\LoginController@showLoginForm');
-Route::get('/home', 'HomeController@index_farmacia')->name('home');
-Route::get('/home/admin', 'HomeController@index_admin')->name('home.admin');
 Route::get('/logout', 'Auth\\LoginController@logout')->name('logout');
+Route::get('/lostPassword', 'MailController@index')->name('mail.index');
+Route::post('/mailRecover', 'MailController@send_mailer')->name('mail.recover');
+Route::get('/overwritePassword/{token}', 'MailController@overwrite_password_view');
+Route::post('/mail/overwritePassword', 'MailController@overwrite_password');
+
+
+
 
 Auth::routes();
 
+Route::group(['middleware' => ['isAthenticated'] ], function(){
+
+	Route::get('/home', 'HomeController@index_farmacia')->name('home');
+	Route::get('/home/admin', 'HomeController@index_admin')->name('home.admin');
 
 // ================== || Ajax Routes Reusability || ====================== //
 
@@ -29,6 +38,8 @@ Auth::routes();
 // ================== || Users || ======================================== //
 
 	Route::resource('users','UserController');
+	Route::post('user/change/password','UserController@change_password_default')->name('user.change.password');
+	
 
 // ================== || Providers || ==================================== //
 
@@ -83,12 +94,32 @@ Auth::routes();
 	
 // ================== || Administrador || ==================================== //
 
-	Route::get('/admin/stocktaking','AdminController@stocktaking')->name('admin.stocktaking');
-	Route::get('/admin/stocktaking/pharmacy','AdminController@stocktaking_pharmacy')->name('admin.stocktaking.pharmacy');
-	Route::get('/admin/stocktaking/pharmacy/view/{id}','AdminController@stocktaking_pharmacy_view')->name('admin.stocktaking.pharmacy.view');
+	Route::group(['middleware' => ['profileUsers'] ], function(){
 
-	Route::get('/admin/medicines','AdminController@medicines')->name('admin.medicines');
-	Route::get('/admin/medicines/filter','AdminController@medicines_filter')->name('admin.medicines.filter');
+		Route::get('/admin/stocktaking','AdminController@stocktaking')->name('admin.stocktaking');
+		Route::get('/admin/stocktaking/pharmacy','AdminController@stocktaking_pharmacy')->name('admin.stocktaking.pharmacy');
+		Route::get('/admin/stocktaking/pharmacy/view/{id}','AdminController@stocktaking_pharmacy_view')->name('admin.stocktaking.pharmacy.view');
+
+		Route::get('/admin/medicines','AdminController@medicines')->name('admin.medicines');
+		Route::get('/admin/medicines/filter','AdminController@medicines_filter')->name('admin.medicines.filter');
+
+		Route::get('/admin/sales','AdminController@sales')->name('admin.sales');
+		Route::get('/admin/sales/pharmacy/view/{id}','AdminController@sales_pharmacy_view')->name('admin.sale.pharmacy.view');
+
+		Route::get('/admin/buy','AdminController@buy')->name('admin.buy');
+		Route::get('/admin/buy/pharmacy/view/{id}','AdminController@buy_pharmacy_view')->name('admin.buy.pharmacy.view');
+		Route::get('/admin/import_sale','AdminController@import_sale')->name('admin.import_sale');
+		Route::get('/admin/find_pharmacy','AdminController@find_pharmacy')->name('admin.find_pharmacys');
+		Route::get('/admin/buys/view_clients','AdminController@view_buys_clients')->name('admin.buys.view.clients');
+
+		Route::post('/admin/pharmacy_import/sale','AdminController@pharmacy_sale_import')->name('admin.pharmacy.import.excel');
+	});
+		
+
+});
+
+	
+	
 	
 	
 	

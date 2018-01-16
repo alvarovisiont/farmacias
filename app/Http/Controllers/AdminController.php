@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Excel;
 
 use App\Admin;
 use App\Stocktaking;
+use App\Sale;
+use App\DetailSale;
+use App\Buy;
 use App\Estado;
 use App\Municipio;
 use App\Parroquia;
+use App\Config;
 
 class AdminController extends Controller
 {
@@ -47,6 +52,7 @@ class AdminController extends Controller
         return view('stocktaking.index')->with($datos);
 
     }
+    
 
 // ** ================== // Funciones para mostrar las medicinas // ===================== ** //
     
@@ -72,4 +78,92 @@ class AdminController extends Controller
 
         return response()->json($medicines);
     }
+
+// ** ================== // Funciones para mostrar las ventas // ===================== ** //
+
+    public function sales()
+    {
+        $estados = Estado::all();
+        return view('admin.sales')->with('estados',$estados);
+    }
+
+    public function sales_pharmacy_view($id)
+    {
+        $sales = Sale::where('users_id','=',$id)->get();
+        
+        return view('sale.index')->with('sales',$sales);
+    }
+
+    // ** ================== // Funciones para mostrar las ventas // ===================== ** //
+
+    public function buy()
+    {
+        $estados = Estado::all();
+        return view('admin.buy')->with('estados',$estados);
+    }
+
+    public function buy_pharmacy_view($id)
+    {
+        $buys = Buy::where('user_id','=',$id)->get();
+        return view('buys.index')->with('buys',$buys);
+    }
+
+    public function import_sale()
+    {
+        $estados = Estado::all();
+        return view('admin.import_sale')->with('estados',$estados);   
+    }
+
+    public function find_pharmacy(Request $request)
+    {
+        $pharmacys = Config::select('configs.nombre_farmacia','user_id')
+                            ->join('users as u','u.id','=','configs.user_id')
+                            ->where([
+                                ['estado','=',$request->estado],
+                                ['municipio','=',$request->municipio],
+                                ['parroquia','=',$request->parroquia],
+                            ])
+                            ->get();
+
+        return response()->json($pharmacys);
+    }
+
+    public function pharmacy_sale_import(Request $request)
+    {
+
+        if($request->file->getMimeType() !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        {
+            return response()->json(['r' => false]);
+        }
+        else
+        {
+            $request->file->move('files',$request->file->getClientOriginalName());
+
+            $result = Excel::load('files\\'.$request->file->getClientOriginalName(),function($reader){
+                $reader->all();
+            })->get();
+
+            $result->each(function($result){
+                echo $result->genero;
+            });
+
+            //return response()->json(['r' => true]);
+        }
+    }    
+
+// ================ función para ver las compras hechas por los clientes ==================== //
+
+    public function view_buys_clients(Request $request)
+    {
+        $user = base64_decode($request->get('user'));
+
+        $buys = DetailSale::select('detail_sales.*')
+                            ->join('sales as s','s.id','=','detail_sales.sales_id')
+                            ->where('s.clients_id','=',$user)
+                            ->get();
+
+        return view('admin.view_buys_clients')->with('buys',$buys); 
+
+    }
+
 }

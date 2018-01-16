@@ -42,7 +42,6 @@
                 <thead>
                     <tr>
                         <th class="text-center">Nombre Farmacia</th>
-                        <th class="text-center">Teléfono</th>
                         <th class="text-center">Estado</th>
                         <th class="text-center">Municipio</th>
                         <th class="text-center">Parroquía</th>
@@ -56,7 +55,6 @@
                         @endphp
                         <tr>
                             <td>{{ $row->nombre_farmacia }}</td>
-                            <td>{{ $row->number }}</td>
                             <td>{{ $row->estados->estado }}</td>
                             <td>{{ $row->municipios()->municipio }}</td>
                             <td>{{ $row->parroquias()->parroquia }}</td>

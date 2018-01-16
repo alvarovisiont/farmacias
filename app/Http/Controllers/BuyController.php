@@ -16,9 +16,21 @@ class BuyController extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
-        $buys = Buy::where('user_id','=',Auth::user()->id)->get();
+        $buys = "";
+        
+        if(isset($request->user_id))
+        {
+            $id = base64_decode($request->user_id);
+
+            $buys = Buy::where('user_id','=',$id)->get();
+        }
+        else
+        {
+            $buys = Buy::where('user_id','=',Auth::user()->id)->get();
+        }
+
         return view('buys.index')->with('buys',$buys);
     }
 

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'FCA'),
 
     /*
     |--------------------------------------------------------------------------
@@ -124,6 +124,20 @@ return [
     'log' => env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mailers And Process Variables
+    |--------------------------------------------------------------------------
+    |
+    | This is for convert data in process variables and can be 
+    | reusables in all application.
+    | 
+    |
+    */
+
+    'user_mail' => env('USER_MAIL','pharmacy.sucre@gmail.com'),
+    'pass_mail' => env('PASS_MAIL','programacionsucre'),
 
     /*
     |--------------------------------------------------------------------------

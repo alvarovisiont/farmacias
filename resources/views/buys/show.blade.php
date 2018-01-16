@@ -12,7 +12,7 @@
 @section('content')
 	<div class="row no-gutters">
 		<div class="col-md-2 col-sm-2">
-			<a href="{{ route('buy.index') }}" class="btn btn-default btn-block"><i class="fa fa-arrow-left"></i>&nbsp;Volver</a>
+			<a href="{{ route('buy.index',['user_id' => base64_encode($buy->user_id)]) }}" class="btn btn-default btn-block"><i class="fa fa-arrow-left"></i>&nbsp;Volver</a>
 		</div>
 		<div class="col-md-2 col-sm-2  col-md-offset-8 col-sm-offset-8">
 			<a href="#" class="btn btn-danger btn-block eliminar" data-eliminar="{{ $buy->id }}"><i class="fa fa-trash"></i>&nbsp;Eliminar</a>

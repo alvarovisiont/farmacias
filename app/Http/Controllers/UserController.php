@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+
 use App\User;
 use App\Estado;
 use App\Municipio;
@@ -48,7 +50,6 @@ class UserController extends Controller
         //
         $this->validate($request,[
             'user' => 'unique:users',
-            'email' => 'unique:users',
             'nombre_farmacia' => 'unique:users'
         ],
         [
@@ -59,7 +60,7 @@ class UserController extends Controller
         
         $user = new User;
         $user->fill($request->all());
-        $user->password = bcrypt($request->password);
+        $user->password = bcrypt('123456789');
         $user->save();
 
         return redirect()->route('users.index');
@@ -111,15 +112,12 @@ class UserController extends Controller
         //
         $this->validate($request,[
             'user' => 'unique:users',
-            'email' => 'unique:users',
             'nombre_farmacia' => 'unique:users',
-            'email' => Rule::unique('users')->ignore($id),
             'user' => Rule::unique('users')->ignore($id),    
             'nombre_farmacia' => Rule::unique('users')->ignore($id),
         ],
         [
             'user.unique' => 'Este Usuario ya ha sido utilizado',
-            'email.unique' => 'Este Email ya ha sido utilizado',
             'nombre_farmacia.unique' => 'Este Nombre de Farmacia ya ha sido utilizado'
         ]);
 
@@ -156,5 +154,19 @@ class UserController extends Controller
                         "flash_class" => "alert-danger"
                     ]);
         }
+    }
+
+    public function change_password_default(Request $request)
+    {
+        $user = User::findOrFail(Auth::user()->id);
+        $user->password = bcrypt($request->password);
+        $user->status = 1;
+        $user->save();
+
+        
+        return redirect()->route('home')->with([
+                        "flash_message" => "Contraseña Modificada con Éxito",
+                        "flash_class" => "alert-success"
+                    ]);           
     }
 }

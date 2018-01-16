@@ -34,7 +34,7 @@
                  </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ route('mail.index') }}">Recuperar Contraseña</a></li>
+                        <li><a href="#">Recuperar Contraseña</a></li>
                     </ul>
                 </div>
             </div>
@@ -53,34 +53,51 @@
                    </ul>  
                   </div>
             @endif
-            @include('partials.flash')
             <div class="panel panel-default">
-                <div class="panel-heading"><strong>Login</strong></div>
+                <div class="panel-heading"><strong>Escriba su nueva Contraseña</strong></div>
                 <div class="panel-body">
-                    <form id="form-login" action="{{ route('login')}}" method="POST">
+                    <form id="form-login" action="{{ url('/mail/overwritePassword')}}" method="POST">
                         {{csrf_field()}}
+                        <input type="hidden" name="user_id" value="{{ $user->id }}">
                         <div class="form-group has-feedback">
-                          <input  class="form-control" type="text" name="user" id="user" placeholder="Usuario">
-                          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                          <input  class="form-control" type="password" name="password" id="password" placeholder="Contraseña">
+                          <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
                         </div>
                         <div class="form-group has-feedback">
-                          <input id="password" class="form-control" type="password" name="password" placeholder="Password">
+                          <input  class="form-control" type="password" name="repita_password" id="repita_password" placeholder="Repita su Contraseña">
                           <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
                         </div>
                         <div class="row">
                           <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
-                            <button id="b-login" type="submit" class="btn btn-primary btn-block">Login&nbsp;<i class="fa fa-send"></i></button>
+                            <button id="b-login" type="submit" class="btn btn-primary btn-block">Send&nbsp;<i class="fa fa-send"></i></button>
                           </div><!-- /.col -->
                         </div>
                   </form>
                 </div>
             </div>
         </div>
-        <script src="{{asset('js/jQuery-2.1.4.min.js')}}"></script>
     </body>
 </html>
 <script>
-  $(document).ready(function(){
-        $('div.alert').not('.alert-important').delay(2000).slideUp(300);
-  })
+
+  var form = document.getElementById('form-login')
+
+  form.addEventListener('submit', function(e){
+    
+    e.preventDefault()
+
+    var pass = document.getElementById('password').value,
+        repeat_pass = document.getElementById('repita_password').value
+
+    if(pass !== repeat_pass)
+    {
+      alert('Las contraseña no coinciden')
+    }
+    else
+    {
+      form.submit()
+    }
+
+  }, true)
+
 </script>

@@ -16,10 +16,10 @@
 	                    </div>
 	                </div>
 	            </div>
-	            <a href="{{ route('sale.index') }}">
+	            <a href="#">
 	                <div class="panel-footer">
-	                    <span class="pull-left">Ver detalles</span>
-	                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                    <span class="pull-left">Totales</span>
+	                    <span class="pull-right"><i class="fa fa-arrow-up"></i></span>
 	                    <div class="clearfix"></div>
 	                </div>
 	            </a>
@@ -39,10 +39,10 @@
 	                    </div>
 	                </div>
 	            </div>
-	            <a href="{{ route('buy.index') }}">
+	            <a href="#">
 	                <div class="panel-footer">
-	                    <span class="pull-left">Ver detalles</span>
-	                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                    <span class="pull-left">Totales</span>
+	                    <span class="pull-right"><i class="fa fa-arrow-up"></i></span>
 	                    <div class="clearfix"></div>
 	                </div>
 	            </a>
@@ -62,10 +62,10 @@
 	                    </div>
 	                </div>
 	            </div>
-	            <a href="{{ route('stocktaking.index') }}">
+	            <a href="#">
 	                <div class="panel-footer">
-	                    <span class="pull-left">Ver detalles</span>
-	                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                    <span class="pull-left">Totales</span>
+	                    <span class="pull-right"><i class="fa fa-arrow-up"></i></span>
 	                    <div class="clearfix"></div>
 	                </div>
 	            </a>
@@ -85,10 +85,10 @@
 	                    </div>
 	                </div>
 	            </div>
-	            <a href="{{ route('config.index') }}">
+	            <a href="#">
 	                <div class="panel-footer">
-	                    <span class="pull-left">Ver detalles</span>
-	                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                    <span class="pull-left">Totales</span>
+	                    <span class="pull-right"><i class="fa fa-arrow-up"></i></span>
 	                    <div class="clearfix"></div>
 	                </div>
 	            </a>
@@ -103,6 +103,23 @@
 				</div>
 				<div class="panel-body">
 					<div id="chartdiv_pie" style="width: 100%;height:180px;"></div>		
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-sm-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>Compradores más recurrentes</h4>
+				</div>
+				<div class="panel-body">
+					<ul class="list-group">
+						@foreach($max_buyers as $row)
+							<li class="list-group-item">
+								{{ $row->name_complete }} - {{ $row->cedula }}
+								<a href="{{ route('admin.buys.view.clients', ['user' => base64_encode($row->id)]) }}" class="pull-right">Ver Compras&nbsp;<i class="fa fa-external-link"></i></a>
+							</li>
+						@endforeach
+					</ul>
 				</div>
 			</div>
 		</div>

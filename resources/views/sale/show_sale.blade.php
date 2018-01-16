@@ -8,7 +8,7 @@
     Detalles de la venta del {{ $fecha }}
 @endsection
 @section('content')
-	<a href="{{route('sale.index')}}" class="btn btn-danger"><i class="fa fa-arrow-left"></i>&nbsp;Volver a la vista de ventas</a>
+	<a href="{{route('sale.index',['user_id' => base64_encode($sale->users_id)])}}" class="btn btn-danger"><i class="fa fa-arrow-left"></i>&nbsp;Volver a la vista de ventas</a>
 	<br /><br/>
 	<ul class="nav nav-pills nav-justified"> 
 		<li class="active"><a href="#data_sale" data-toggle="pill">Datos de la Venta</a></li>
