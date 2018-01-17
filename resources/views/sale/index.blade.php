@@ -34,7 +34,9 @@
 	    <div class="box-header with-border">
 	      	<h2 class="box-title"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Ventas Registradas</h2>
 	      	<div class="pull-right">
-	       		<a href="{{ route('sale.sell') }}" class="btn btn-success btn-flat btn-md pull-right">Registrar Ventas&nbsp;&nbsp;<i class="fa fa-pencil"></i><i class="fa fa-plus"></i></a>
+	      		@if(Auth::user()->nivel > 1)
+	       			<a href="{{ route('sale.sell') }}" class="btn btn-success btn-flat btn-md pull-right">Registrar Ventas&nbsp;&nbsp;<i class="fa fa-pencil"></i><i class="fa fa-plus"></i></a>
+	       		@endif
 	      	</div>
 	    </div>
 	    <div class="box-body">

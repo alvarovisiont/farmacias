@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Stocktaking extends Model
 {
     //
-    protected $fillable = ['providers_id','users_id','trademarks_id','groups_id','product','component','quantity','price','buying_price_provider','buying_date','config_currencies_iva_id','config_currencies_discount_id', 'date_of_expense'];
+    protected $fillable = ['providers_id','users_id','trademarks_id','groups_id','code_product','product','component','quantity','price','buying_price_provider','buying_date','config_currencies_iva_id','config_currencies_discount_id', 'date_of_expense'];
 
     public function trademark_product()
     {

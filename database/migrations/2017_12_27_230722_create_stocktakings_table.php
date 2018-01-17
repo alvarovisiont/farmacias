@@ -19,6 +19,8 @@ class CreateStocktakingsTable extends Migration
             $table->integer('trademarks_id')->unsigned();
             $table->integer('groups_id')->unsigned();
             $table->integer('users_id')->unsigned();
+            
+            $table->string('code_product');
             $table->text('product');
             $table->string('component')->nullable()->default('');
             $table->integer('quantity');

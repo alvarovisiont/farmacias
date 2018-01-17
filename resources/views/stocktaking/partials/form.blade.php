@@ -13,7 +13,12 @@
 	        </ul>
 	    </div>
 	@endif
-	
+	<div class="form-group">
+		<label for="code_product" class="control-label col-md-2 col-sm-2">Código Producto</label>
+		<div class="col-md-4 col-sm-4">
+			<input type="text" id="code_product" name="code_product" required="" class="form-control" value="{{$stock->code_product}}">
+		</div>
+	</div>
 	<div class="form-group">
 		<label for="providers_id" class="control-label col-md-2 col-sm-2">Proveedor</label>
 		<div class="col-md-4 col-sm-4">

@@ -30,15 +30,13 @@ class AdminController extends Controller
     public function stocktaking_pharmacy(Request $request)
     {
     	// retorna los daatos a la vista con las farmacias encontradas
+        
+        $where = Admin::where_filter_stocktaking($request);
 
     	$pharmacys = Stocktaking::selectRaw('COUNT(stocktakings.id) as cantidad,c.*,stocktakings.users_id')
     								->join('users as u','u.id','=','stocktakings.users_id')
     								->join('configs as c','c.user_id','=','u.id')
-    								->where([
-    									['u.estado','=',$request->estados],
-    									['u.municipio','=',$request->municipios],
-    									['u.parroquia','=',$request->parroquias],
-    								])
+    								->whereRaw($where)
     								->groupBy('stocktakings.users_id','c.id','c.nombre_farmacia','c.director','c.director_number','c.director_email','c.logo','c.iva_porcentaje','c.user_id','c.created_at','c.updated_at')
     								->get();
 
@@ -108,12 +106,6 @@ class AdminController extends Controller
         return view('buys.index')->with('buys',$buys);
     }
 
-    public function import_sale()
-    {
-        $estados = Estado::all();
-        return view('admin.import_sale')->with('estados',$estados);   
-    }
-
     public function find_pharmacy(Request $request)
     {
         $pharmacys = Config::select('configs.nombre_farmacia','user_id')
@@ -164,6 +156,14 @@ class AdminController extends Controller
 
         return view('admin.view_buys_clients')->with('buys',$buys); 
 
+    }
+
+// =============== // función para ver las configuraciones // ================================ //
+
+    public function configs()
+    {
+        $estados = Estado::all();
+        return view('admin.configs')->with('estados',$estados);   
     }
 
 }

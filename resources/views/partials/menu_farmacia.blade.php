@@ -37,6 +37,7 @@
 	<ul class="treeview-menu">
 	  <li><a href="{{route('stocktaking.create')}}"><i class="fa fa-circle-o"></i>Agregar Producto</a></li>
 	  <li><a href="{{route('stocktaking.index')}}"><i class="fa fa-circle-o"></i>Ver Inventario</a></li>
+	  <li><a href="{{url('stocktaking/import/view')}}"><i class="fa fa-circle-o"></i>Importar Inventario</a></li>
 	</ul>
 </li>
 <li class="treeview">
@@ -70,3 +71,5 @@
 	</ul>
 </li>
 <li><a href="{{ route('config.index') }}"><i class="fa fa-cog fa-spin fa-fw"></i> Configuración Global</a></li>
+
+<li><a href="{{ route('sales.import_sale') }}"><i class="fa fa-share" aria-hidden="true"></i> Importar Ventas</a></li>

@@ -144,12 +144,7 @@
 
 				$('.oculto').slideUp('slow/400/fast')
 
-				var validate = false
-
-				$(this).find('.data').each(function(e){
-
-					validate = $(this).val() !== "" ? true : validate
-				})
+				var validate = true
 
 				if(validate)
 				{

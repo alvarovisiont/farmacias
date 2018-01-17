@@ -56,6 +56,12 @@ Route::group(['middleware' => ['isAthenticated'] ], function(){
 	Route::get('stocktaking/pdf/{id}','StockTakingController@pdf_stocktaking')->name('stocktaking.pdf');
 	Route::get('stocktaking/excel/{id}','StockTakingController@excel_stocktaking')->name('stocktaking.excel');
 	Route::get('search_products/all','StockTakingController@allproducts')->name('search.products.all');
+	Route::get('stocktaking/import/view','StockTakingController@stocktaking_view');
+	Route::get('/download/stocktaking/excel/example','StockTakingController@download_excel_stock_example')->name('download.stocktaking.example.excel');
+	
+	Route::post('/stocktaking/import/stored_products','StockTakingController@stocktaking_import');
+	
+	
 
 // ================== || Trademark || ==================================== //
 
@@ -75,6 +81,11 @@ Route::group(['middleware' => ['isAthenticated'] ], function(){
 	Route::post('sale/products-temp/remove','SalesController@remove_products_temp')->name('sales.products.remove.temp');
 	Route::post('sale/store','SalesController@store')->name('sale.store');
 	Route::get('sale/client','ClientController@search_clients')->name('search.clients');
+
+	Route::get('/sales/import_sale','SalesController@import_sale')->name('sales.import_sale');
+	Route::get('/sales/download/example/import_sale','SalesController@export_excel_example')->name('sales.download.example.import_sale');
+	
+	Route::post('/sales/import/sales','SalesController@sales_import_excel')->name('sales.import.excel');
 
 // ================== || Clients || ==================================== //	
 	
@@ -108,11 +119,11 @@ Route::group(['middleware' => ['isAthenticated'] ], function(){
 
 		Route::get('/admin/buy','AdminController@buy')->name('admin.buy');
 		Route::get('/admin/buy/pharmacy/view/{id}','AdminController@buy_pharmacy_view')->name('admin.buy.pharmacy.view');
-		Route::get('/admin/import_sale','AdminController@import_sale')->name('admin.import_sale');
+
 		Route::get('/admin/find_pharmacy','AdminController@find_pharmacy')->name('admin.find_pharmacys');
 		Route::get('/admin/buys/view_clients','AdminController@view_buys_clients')->name('admin.buys.view.clients');
 
-		Route::post('/admin/pharmacy_import/sale','AdminController@pharmacy_sale_import')->name('admin.pharmacy.import.excel');
+		Route::get('/admin/configs','AdminController@configs')->name('admin.configs');
 	});
 		
 

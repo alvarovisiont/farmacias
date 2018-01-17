@@ -1,15 +1,15 @@
 @extends('layouts.app')
 @section('view_descrip')
-	Buscar farmacias para ver las Compras
+	Buscar farmacias para ver sus configuraciones
 @endsection
 @section('content')
 	<div class="row no-gutters">
-		<form action="" class="form-horizontal" method="POST" id="form_buscar" enctype="multipart/form-data">
+		<form action="" class="form-horizontal" method="POST" id="form_buscar">
 			{{ csrf_field()}}
 			<div class="form-group">
 				<label for="estados" class="control-label col-md-2 col-sm-2">Estados</label>
 				<div class="col-md-4 col-sm-4">
-					<select name="estados" id="estados" required="" class="form-control">
+					<select name="estados" id="estados" class="form-control">
 						<option value=""></option>
 						@foreach($estados as $row)
 							<option value="{{ $row->id }}">{{ $row->estado }}</option>
@@ -18,7 +18,7 @@
 				</div>
 				<label for="municipios" class="control-label col-md-2 col-sm-2">Municipio</label>
 				<div class="col-md-4 col-sm-4">
-					<select name="municipios" id="municipios" required="" class="form-control">
+					<select name="municipios" id="municipios" class="form-control">
 						<option value=""></option>
 					</select>
 				</div>
@@ -26,29 +26,33 @@
 			<div class="form-group">
 				<label for="parroquias" class="control-label col-md-2 col-sm-2">Parroquias</label>
 				<div class="col-md-4 col-sm-4">
-					<select name="parroquias" id="parroquias" required="" class="form-control">
+					<select name="parroquias" id="parroquias" class="form-control">
 						<option value=""></option>
 					</select>
-				</div>
-				<label for="pharmacy_id" class="control-label col-md-2 col-sm-2">Farmacias</label>
-				<div class="col-md-4 col-sm-4">
-					<select name="pharmacy_id" id="pharmacy_id" required="" class="form-control">
-						<option value=""></option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="file" class="control-label col-md-2 col-sm-2">Archivo</label>
-				<div class="col-md-4 col-sm-4">
-					<input type="file" id="file" name="file" required="">
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
-					<button type="submit" class="btn btn-block btn-danger" id="btn_buscar">Importar&nbsp;<i class="fa fa-arrow-up"></i></button>
+					<button type="submit" class="btn btn-block btn-danger" id="btn_buscar">Buscar&nbsp;<i class="fa fa-send"></i></button>
 				</div>
 			</div>
 		</form>		
+	</div>
+	<div class="row no-gutters">
+		<table class="table table-bordered table-responsive table-hover" id="table">
+			<thead>
+				<tr>
+					<th class="text-center">Farmacia</th>
+					<th class="text-center">Director</th>
+					<th class="text-center">Teléfono</th>
+					<th class="text-center">Correo</th>
+					<th class="text-center">Iva por punto</th>
+				</tr>
+			</thead>
+			<tbody class="text-center">
+				
+			</tbody>
+		</table>
 	</div>
 
 @endsection
@@ -112,60 +116,43 @@
 				});
 			})
 
-			$('#parroquias').change(function(e) {
-				var parro = $(this).val(),
-					muni  = $('#municipios').val(),
-					esta  = $('#estados').val()
-
-				$.ajax({
-					url: '{{ route("admin.find_pharmacys") }}',
-					type: 'GET',
-					dataType: 'JSON',
-					data: {estado: esta, municipio: muni, parroquia: parro},
-				})
-				.done(function(data) {
-					var options = "<option></option>";
-
-					$.grep(data,function(i,e){
-						options += "<option value='"+i.user_id+"'>"+i.nombre_farmacia+"</option>"
-					})
-
-					$('#pharmacy_id').html(options)
-
-				})
-				.fail(function() {
-					console.log("error");
-				})
-				.always(function() {
-					console.log("complete");
-				});
-				
-			});
-
 			$('#form_buscar').submit(function(e) {
 				
 				e.preventDefault()
 
-				$('#btn_buscar').html('Cargando...&nbsp;<i class="fa fa-refresh fa-spin fa-1x fa-fw"></i>')
-
-				var form_data = new FormData($('#form_buscar')[0]);
+				$('#btn_buscar').html('Cargando....')
+				$('#table').DataTable().destroy()
 
 				$.ajax({
-					url: '{{ route("admin.pharmacy.import.excel")}}',
-					type: 'POST',
+					url: '{{ route("admin.stocktaking.pharmacy")}}',
+					type: 'GET',
 					dataType: 'JSON',
-					data: form_data,
-					cache: false,
-					contentType: false,
-                	processData: false
+					data: $(this).serialize(),
+					cache: false
 				})
 				.done(function(data) {
+					$('#btn_buscar').html('Buscar&nbsp;<i class="fa fa-send"></i>')
 					
-					$('#btn_buscar').html('Importar&nbsp;<i class="fa fa-arrow-up"></i>')
-					
+					var rows = ''
+
+					$.grep(data,function(i,e) {
+						rows+= '<tr><td>'+i.nombre_farmacia+'</td><td>'+i.director+'</td><td>'+i.director_number+'</td><td>'+i.director_email+'</td><td>'+i.iva_porcentaje+'</td></tr>'
+					})
+
+					$('#table').children('tbody').empty().html(rows)
+					$('#table').dataTable()
 				})
 			});
 
+			$('#table').children('tbody').on('click','tr td .ver_compras',function(e){
+				e.preventDefault()
+
+				let id = e.currentTarget.getAttribute('user_id'),
+					route = "{{ url('admin/buy/pharmacy/view') }}"+"/"+id
+
+				window.open(route, '_blank')
+
+			})
 		})
 	</script>
 @endsection

@@ -9,7 +9,7 @@
 			<div class="form-group">
 				<label for="estados" class="control-label col-md-2 col-sm-2">Estados</label>
 				<div class="col-md-4 col-sm-4">
-					<select name="estados" id="estados" required="" class="form-control">
+					<select name="estados" id="estados" class="form-control">
 						<option value=""></option>
 						@foreach($estados as $row)
 							<option value="{{ $row->id }}">{{ $row->estado }}</option>
@@ -18,7 +18,7 @@
 				</div>
 				<label for="municipios" class="control-label col-md-2 col-sm-2">Municipio</label>
 				<div class="col-md-4 col-sm-4">
-					<select name="municipios" id="municipios" required="" class="form-control">
+					<select name="municipios" id="municipios" class="form-control">
 						<option value=""></option>
 					</select>
 				</div>
@@ -26,7 +26,7 @@
 			<div class="form-group">
 				<label for="parroquias" class="control-label col-md-2 col-sm-2">Parroquias</label>
 				<div class="col-md-4 col-sm-4">
-					<select name="parroquias" id="parroquias" required="" class="form-control">
+					<select name="parroquias" id="parroquias" class="form-control">
 						<option value=""></option>
 					</select>
 				</div>

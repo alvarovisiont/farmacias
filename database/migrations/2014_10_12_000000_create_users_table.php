@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->mediumInteger('parroquia');
             $table->smallInteger('status');
             $table->text('token_validation')->nullable();
+            $table->enum('type'[1,2]);
             $table->rememberToken();
             $table->timestamps();
         });

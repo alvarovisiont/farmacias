@@ -49,13 +49,10 @@ class ConfigController extends Controller
         request()->validate([
 
             'logo' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'director_email' => 'unique:configs'
-
         ],
         [
             'image.mimes' => 'La imagen debe ser de formato jpeg o png',
             'image.max' => 'La imagen no debe ser superior a 2 mb',
-            'director_email.unique' => 'El correo intoducido ya ha sido utilizado'
         ]);
 
         $imageName = "";
@@ -131,13 +128,10 @@ class ConfigController extends Controller
         request()->validate([
 
             'logo' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'director_email' => 'unique:configs',
-            'director_email' => Rule::unique('configs')->ignore($id),
         ],
         [
             'image.mimes' => 'La imagen debe ser de formato jpeg o png',
             'image.max' => 'La imagen no debe ser superior a 2 mb',
-            'director_email.unique' => 'El correo intoducido ya ha sido utilizado'
         ]);
 
         $config = Config::findOrFail($id);

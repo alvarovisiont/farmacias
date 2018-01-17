@@ -98,6 +98,55 @@ class Admin extends Model
             }
         }
 
+        if(empty($where))
+        {
+            $where = "1";
+        }
+
+        return $where;
+    }
+
+    public static function where_filter_stocktaking($request)
+    {   
+        $where = "";
+
+        if(!empty($request->estados))
+        {
+            if(empty($where))
+            {
+                $where = " u.estado = $request->estados";
+            }
+        }
+
+        if(!empty($request->municipios))
+        {
+            if(empty($where))
+            {
+                $where = " u.municipio = $request->municipios";
+            }
+            else
+            {
+                $where.= " AND u.municipio = $request->municipios";
+            }
+        }
+
+        if(!empty($request->municipios))
+        {
+            if(empty($where))
+            {
+                $where = " u.parroquia = $request->parroquias";
+            }
+            else
+            {
+                $where.= " AND u.parroquia = $request->parroquias";
+            }
+        }
+
+        if(empty($where))
+        {
+            $where = "1";
+        }
+
         return $where;
     }
 }

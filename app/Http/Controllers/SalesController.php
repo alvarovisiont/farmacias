@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use Excel;
 
 use App\Sale;
 use App\Config;
@@ -110,6 +111,7 @@ class SalesController extends Controller
             $sale->iva_config_global = 0;
         }
         $sale->total = $request->total;
+        $sale->id_temporal = 0;
         if($sale->save())
         {
             $temp_detail_sale = TempSale::where('users_id','=',Auth::user()->id)->get();
@@ -201,5 +203,73 @@ class SalesController extends Controller
         $pdf = PDF::loadView("sale.pdf_invoice",$datos);
 
         return $pdf->stream('Factura '.$sale->invoice.".pdf");
+    }
+
+    public function import_sale()
+    {
+        $ruta = 'sales.import.excel';
+        $ruta_descarga = "sales.download.example.import_sale";
+        $datos = ['ruta' => $ruta, 'ruta_descarga' => $ruta_descarga];
+
+        return view('sale.import_sales')->with($datos);
+    }
+
+    public function export_excel_example()
+    {
+         Excel::load('files\ventas_examples.xlsx',function($excel){
+
+        })->export('xlsx');   
+    }
+
+    public function sales_import_excel(Request $request)
+    {
+        $file = $request->file_excel;
+        $name_file = time().$file->getClientOriginalName();
+
+        $file->move('files',$name_file);
+
+        $results = Excel::load('files\\'.$name_file, function($excel){
+            $excel->all();
+        })->get();
+
+        try
+        {   
+            $no_importados = [];
+            foreach ($results as $sheet) 
+            {
+                // Loop through all rows
+
+                foreach($sheet as $row)
+                {
+                    $res = Sale::save_import_excel_sells($row,$sheet);
+
+                    if(!$res && $sheet->getTitle() == "Hoja2")
+                    {
+                        if($row->id_producto)
+                        {
+                            array_push($no_importados, $row->id_producto);                                   
+
+                            $sale = Sale::where([
+                                ['id_temporal','=',$row->id_venta] ,
+                                ['users_id','=',Auth::user()->id]
+                            ])->first();
+
+                            $sale->total = $sale->total - $row->total;
+                            $sale->save();
+                        }
+                    }
+                }
+
+            }
+
+            Sale::where('users_id','=',Auth::user()->id)->update(['id_temporal' => 0]);
+
+            return response()->json(['r' => true,'no_importados' => $no_importados]);            
+        }
+        catch(\Illuminate\Database\QueryException $e)
+        {
+            echo $e->getMessage();
+            return response()->json(['r' => false, 'no_importados' => $no_importados]);
+        }
     }
 }

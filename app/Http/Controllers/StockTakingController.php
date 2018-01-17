@@ -62,6 +62,16 @@ class StockTakingController extends Controller
     public function store(Request $request)
     {
         //
+
+        $this->validate($request,[
+            'code_product' => Rule::unique('stocktakings')->where(function ($query) {
+                $query->where('users_id', Auth::user()->id);
+            })
+        ],
+        [
+            'code_product.unique' => 'Este código de producto ya ha sido utilizado'
+        ]);
+
         $stock = new StockTaking;
         $stock->fill($request->all());
         $stock->buying_date = date('Y-m-d',strtotime($stock->buying_date));
@@ -124,6 +134,15 @@ class StockTakingController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request,[
+            'code_product' => Rule::unique('stocktakings')->where(function ($query) use ($id) {
+                $query->where([ ['users_id', Auth::user()->id], ['id','<>',$id] ]);
+            })
+        ],
+        [
+            'code_product.unique' => 'Este código de producto ya ha sido utilizado'
+        ]);
+
         $stock = StockTaking::findOrFail($id);
         $stock->fill($request->all());
         $stock->buying_date = date('Y-m-d',strtotime($stock->buying_date));
@@ -191,7 +210,7 @@ class StockTakingController extends Controller
         $stock = Stocktaking::where('users_id','=',$id)->get();
         $config = Config::where('user_id','=',$id)->first();
 
-        $datos = ['config' => $config,'stock' => $stock];
+        $datos = ['config' => $config,'stock' => $stock,'con' => 0];
 
         $pdf = PDF::loadView('stocktaking.pdf_stock',$datos,[],[
             'title' => 'Inventario',
@@ -216,4 +235,94 @@ class StockTakingController extends Controller
         })->export('xlsx');
     }
 
+    // ============================ // Import Stock // ======================================= //
+
+    public function stocktaking_view()
+    {
+        $ruta = "/stocktaking/import/stored_products";
+        $ruta_descarga = "download.stocktaking.example.excel";
+        $datos = ['ruta' => $ruta, 'ruta_descarga' => $ruta_descarga];
+
+        return view('stocktaking.import_view')->with($datos);
+    }
+
+    public function download_excel_stock_example()
+    {
+        Excel::load('files\inventario_example.xlsx',function($excel){
+
+        })->export('xlsx');   
+    }
+
+    public function stocktaking_import(Request $request)
+    {
+        if($request->excel_file->getMimeType() !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        {
+            return response()->json(['r' => false]);
+        }
+        else
+        {
+            $producto_no_importados = [];
+
+            try{
+                $file = $request->excel_file;
+                $nombre_archivo = time().$file->getClientOriginalName();
+
+                $file->move('files',$nombre_archivo);   
+
+                $result = Excel::load('files\\'.$nombre_archivo,function($reader){
+                    $reader->all();
+                })->get();
+
+
+                $result->each(function($result) use ($producto_no_importados) {
+
+                    $product = Stocktaking::where([
+                        ['code_product','=',$result->codigo_producto],
+                        ['users_id','=',Auth::user()->id]
+                    ])->first();
+
+                    if($product)
+                    {
+                        array_push($producto_no_importados, $product->code_product); 
+                    }
+                    else
+                    {
+                        $stock = new Stocktaking;
+
+                        $stock->providers_id                    = $result->id_proveedor;
+                        $stock->users_id                        = Auth::user()->id;
+                        $stock->trademarks_id                   = $result->id_marca;
+                        $stock->groups_id                       = $result->id_grupo;
+                        $stock->code_product                    = $result->codigo_producto;
+                        $stock->product                         = $result->producto;
+                        $stock->component                       = $result->componente;
+                        $stock->quantity                        = $result->cantidad;
+                        $stock->price                           = $result->precio_venta;
+                        $stock->buying_price_provider           = $result->precio_comprado_proveedor;
+                        $stock->buying_date                     = $result->fecha_comprado;
+                        $stock->config_currencies_iva_id        = $result->id_iva_configuracion_moneda;
+                        $stock->config_currencies_discount_id   = $result->id_descuento_configuracion_moneda;
+                        $stock->date_of_expense                 = $result->fecha_expension;
+
+                        $stock->save();
+                    }
+                    
+                        
+
+                });
+
+                if(file_exists( public_path('files\\').$nombre_archivo ) ) 
+                {
+                    unlink( public_path('files\\').$nombre_archivo );   
+                }
+
+
+                return response()->json(['r' => true]);
+            }
+            catch(\Illuminate\Database\QueryException $e)
+            {
+                return response()->json(['r' => false, 'error' => true ]);
+            }
+        }
+    }
 }

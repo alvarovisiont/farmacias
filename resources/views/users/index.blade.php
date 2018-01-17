@@ -45,6 +45,7 @@
                         <th class="text-center">Estado</th>
                         <th class="text-center">Municipio</th>
                         <th class="text-center">Parroquía</th>
+                        <th class="text-center">Tipo</th>
                         <th class="text-center">Acción</th>
                     </tr>
                 </thead>
@@ -58,6 +59,7 @@
                             <td>{{ $row->estados->estado }}</td>
                             <td>{{ $row->municipios()->municipio }}</td>
                             <td>{{ $row->parroquias()->parroquia }}</td>
+                            <td>{{ $row->type == 1 ? 'pública' : 'privada'  }}</td>
                             <td>
                                 <a href="{{ url('users/'.$row->id.'/edit') }}" class="letras-medianas" title="Editar"><i class="fa fa-edit"></i></a>
                                 <a href="#" class="eliminar letras-medianas" title="Eliminar" data-eliminar = "{{$row->id}}"><i class="fa fa-trash"></i></a>

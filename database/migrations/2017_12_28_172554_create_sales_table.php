@@ -21,6 +21,7 @@ class CreateSalesTable extends Migration
             $table->enum('pay_mode',['efectivo','punto']);
             $table->integer('iva_config_global');
             $table->double('total',15,2);
+            $table->integer('id_temporal');
             $table->foreign('clients_id')->references('id')->on('clients');
             $table->foreign('users_id')->references('id')->on('users');
             $table->timestamps();

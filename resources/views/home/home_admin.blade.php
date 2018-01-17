@@ -16,7 +16,7 @@
 	                    </div>
 	                </div>
 	            </div>
-	            <a href="#">
+	            <a href="{{ route('admin.sales') }}">
 	                <div class="panel-footer">
 	                    <span class="pull-left">Totales</span>
 	                    <span class="pull-right"><i class="fa fa-arrow-up"></i></span>
@@ -39,7 +39,7 @@
 	                    </div>
 	                </div>
 	            </div>
-	            <a href="#">
+	            <a href="{{ route('admin.buy') }}">
 	                <div class="panel-footer">
 	                    <span class="pull-left">Totales</span>
 	                    <span class="pull-right"><i class="fa fa-arrow-up"></i></span>
@@ -62,7 +62,7 @@
 	                    </div>
 	                </div>
 	            </div>
-	            <a href="#">
+	            <a href="{{ route('admin.stocktaking') }}">
 	                <div class="panel-footer">
 	                    <span class="pull-left">Totales</span>
 	                    <span class="pull-right"><i class="fa fa-arrow-up"></i></span>
@@ -76,16 +76,16 @@
 	            <div class="panel-heading">
 	                <div class="row no-gutters">
 	                    <div class="col-md-3 col-sm-3">
-	                        <i class="fa fa-cog fa-spin fa-fw fa-5x"></i>
+	                        <i class="fa fa-users fa-5x"></i>
 	                    </div>
 	                    <div class="col-md-9 col-sm-9 text-right">
 	                        <div class="huge"></div>
-	                        <div>Configuración</div>
-	                        <div style="font-size: 2em;" id="total_registros"></div>
+	                        <div>Farmacias</div>
+	                        <div style="font-size: 2em;" id="total_registros">{{ $users }}</div>
 	                    </div>
 	                </div>
 	            </div>
-	            <a href="#">
+	            <a href="{{ route('users.index') }}">
 	                <div class="panel-footer">
 	                    <span class="pull-left">Totales</span>
 	                    <span class="pull-right"><i class="fa fa-arrow-up"></i></span>

@@ -38,9 +38,11 @@ $fecha = $dias[date('w',strtotime("- 5 hour"))]." ".date('d',strtotime("- 5 hour
 	<table class="table table-bordered">
 		<thead>
 			<tr>
-				<td colspan="7" class="text-center">Inventario</td>
+				<td colspan="8" class="text-center">Inventario</td>
 			</tr>
 			<tr>
+				<th class="text-center">#</th>
+				<th class="text-center">Código</th>
 				<th class="text-center">Producto</th>
 				<th class="text-center">Componente</th>
 				<th class="text-center">Proveedor</th>
@@ -52,7 +54,12 @@ $fecha = $dias[date('w',strtotime("- 5 hour"))]." ".date('d',strtotime("- 5 hour
 		</thead>
 		<tbody class="text-center">
 			@foreach($stock as $row)
+				@php 
+					$con++;
+				@endphp
 				<tr>
+					<td class="text-center"> {{ $con }} </td>
+					<td class="text-center"> {{ $row->code_product }} </td>
 					<td class="text-center"> {{ $row->product }} </td>
 					<td class="text-center"> {{ $row->component }} </td>
 					<td class="text-center"> {{ $row->provider_product->name }} </td>

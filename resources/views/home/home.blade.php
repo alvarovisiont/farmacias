@@ -101,7 +101,21 @@
 	@include('partials.flash')
 	<div class="row no-gutters">
 		<div class="col-md-6 col-sm-6">
-			<div id="chartdiv" style="width: 100%;height:380px;font-size: 11px;"></div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>Compradores más recurrentes</h4>
+				</div>
+				<div class="panel-body">
+					<ul class="list-group">
+						@foreach($max_buyers as $row)
+							<li class="list-group-item">
+								{{ $row->name_complete }} - {{ $row->cedula }}
+								<a href="{{ route('admin.buys.view.clients', ['user' => base64_encode($row->id)]) }}" class="pull-right">Ver Compras&nbsp;<i class="fa fa-external-link"></i></a>
+							</li>
+						@endforeach
+					</ul>
+				</div>
+			</div>
 		</div>
 		<div class="col-md-6 col-sm-6">
 			<div class="panel panel-default">
@@ -201,50 +215,6 @@
 				} 
 
 			});
-
-
-			var objetos = [{"categoria": "Debe", "saldo": '{{ $total_balance->total_spend }}', "color": "#BDBDBD"},{
-				"categoria": "Haber", "saldo": '{{ $total_balance->total_sale }}', "color": "#8A0829"
-			}]
-
-			var chart = AmCharts.makeChart( "chartdiv", {
-		        "type": "serial",
-		        "theme": "none",
-		        "depth3D": 20,
-		        "angle": 30,
-		        "legend": {
-		          "horizontalGap": 10,
-		          "useGraphSettings": true,
-		          "markerSize": 10
-		        },
-		        "dataProvider": objetos,
-		        "valueAxes": [ {
-		          "stackType": "regular",
-		          "axisAlpha": 0,
-		          "gridAlpha": 0
-		        } ],
-		        "graphs": [ {
-		          "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-		          "fillAlphas": 0.8,
-		          "labelText": "[[value]]",
-		          "lineAlpha": 0.3,
-		          "title": "Flujo de dinero al mes",
-		          "type": "column",
-		          "color": "#FFF",
-		          "valueField": "saldo",
-		          "colorField" : "color",
-		          "fillColors" : "#8A0829",
-		        }
-		        ],
-		        "categoryField": "categoria",
-		        "categoryAxis": {
-		          "gridPosition": "start",
-		          "axisAlpha": 0,
-		          "gridAlpha": 0,
-		          "position": "left"
-		        }
-
-	    	})
 
 			var data = []
 

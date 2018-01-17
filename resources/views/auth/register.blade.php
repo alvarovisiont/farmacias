@@ -13,7 +13,7 @@
                     @endif
                     {{csrf_field()}}
                         
-                    <input type="hidden" name="status" value="0">
+                    <input type="hidden" name="status" value="{{ $user->status ? $user->status : old('status') }}">
 
                     <div class="form-group{{ $errors->has('user') ? ' has-error' : '' }}">
                         <label for="user" class="col-md-4 control-label">User</label>
@@ -150,6 +150,22 @@
                             @if ($errors->has('parroquia'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('parroquia') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
+                        <label for="type" class="col-md-4 control-label">Tipo</label>
+                        <div class="col-md-6">
+                            <select name="type" id="type" required="" class="form-control">
+                                <option value=""></option>
+                                <option value="1" {{$user && $user->type == 1 ? 'selected' : ''}}>Pública</option>
+                                <option value="2" {{$user && $user->type == 2 ? 'selected' : ''}}>Privada</option>
+                            </select>
+
+                            @if ($errors->has('type'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('type') }}</strong>
                                 </span>
                             @endif
                         </div>

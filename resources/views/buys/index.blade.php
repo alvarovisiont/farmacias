@@ -34,7 +34,9 @@
         <div class="box-header with-border">
               <h2 class="box-title"><i class="fa fa-truck"></i>&nbsp;&nbsp;Compras Registradas</h2>
               <div class="pull-right">
-                   <a href="{{route('buy.make')}}" class="btn btn-warning btn-flat btn-md pull-right">Registrar Compra&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
+                    @if(Auth::user()->nivel > 1)
+                        <a href="{{route('buy.make')}}" class="btn btn-warning btn-flat btn-md pull-right">Registrar Compra&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
+                    @endif
               </div>
         </div>
         <div class="box-body">
