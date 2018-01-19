@@ -3,7 +3,7 @@
     
 @endsection
 @section('content')
-    <div class="row">
+    <div class="row animated bounceInDown">
       <!-- Apply any bg-* class to to the icon to color it -->
         <div class="col-sm-3 col-md-3">
             <div class="panel panel-primary">
