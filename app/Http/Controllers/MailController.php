@@ -27,7 +27,7 @@ class MailController extends Controller
     		$data = [
     			'email' => $email->director_email,
     			'subject' => 'Recuperación de contraseña',
-    			'bodyMessage' => 'Por favor acceda a esta ruta para restituir su contraseña '.url('overwritePassword/'.$cifrado)
+    			'bodyMessage' => 'Por favor acceda a esta ruta para restituir su contraseña '.config('app.url').'/farmacias/public/overwritePassword/'.$cifrado
     		];
 
     		Mail::send('mail.mail',$data,function($message) use ($data){

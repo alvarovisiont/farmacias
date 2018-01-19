@@ -248,7 +248,7 @@ class StockTakingController extends Controller
 
     public function download_excel_stock_example()
     {
-        Excel::load('files\inventario_example.xlsx',function($excel){
+        Excel::load('files/inventario_example.xlsx',function($excel){
 
         })->export('xlsx');   
     }
@@ -269,7 +269,7 @@ class StockTakingController extends Controller
 
                 $file->move('files',$nombre_archivo);   
 
-                $result = Excel::load('files\\'.$nombre_archivo,function($reader){
+                $result = Excel::load('files/'.$nombre_archivo,function($reader){
                     $reader->all();
                 })->get();
 
@@ -311,9 +311,9 @@ class StockTakingController extends Controller
 
                 });
 
-                if(file_exists( public_path('files\\').$nombre_archivo ) ) 
+                if(file_exists( public_path('files/').$nombre_archivo ) ) 
                 {
-                    unlink( public_path('files\\').$nombre_archivo );   
+                    unlink( public_path('files/').$nombre_archivo );   
                 }
 
 

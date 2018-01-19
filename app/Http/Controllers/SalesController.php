@@ -216,7 +216,7 @@ class SalesController extends Controller
 
     public function export_excel_example()
     {
-         Excel::load('files\ventas_examples.xlsx',function($excel){
+         Excel::load('files/ventas_examples.xlsx',function($excel){
 
         })->export('xlsx');   
     }
@@ -228,7 +228,7 @@ class SalesController extends Controller
 
         $file->move('files',$name_file);
 
-        $results = Excel::load('files\\'.$name_file, function($excel){
+        $results = Excel::load('files/'.$name_file, function($excel){
             $excel->all();
         })->get();
 
@@ -264,10 +264,20 @@ class SalesController extends Controller
 
             Sale::where('users_id','=',Auth::user()->id)->update(['id_temporal' => 0]);
 
+            if(file_exists( public_path('files/').$name_file ) ) 
+            {
+                unlink( public_path('files/').$name_file );   
+            }
+
             return response()->json(['r' => true,'no_importados' => $no_importados]);            
         }
         catch(\Illuminate\Database\QueryException $e)
         {
+            if(file_exists( public_path('files/').$name_file ) ) 
+            {
+                unlink( public_path('files/').$name_file );   
+            }
+            
             echo $e->getMessage();
             return response()->json(['r' => false, 'no_importados' => $no_importados]);
         }

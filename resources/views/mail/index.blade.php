@@ -53,6 +53,7 @@
                    </ul>  
                   </div>
             @endif
+            @include('partials.flash')
             <div class="panel panel-default">
                 <div class="panel-heading"><strong>Email Recovery</strong></div>
                 <div class="panel-body">
@@ -71,5 +72,11 @@
                 </div>
             </div>
         </div>
+    <script src="{{asset('js/jQuery-2.1.4.min.js')}}"></script>
     </body>
 </html>
+<script>
+  $(document).ready(function(){
+        $('div.alert').not('.alert-important').delay(2000).slideUp(300);
+  })
+</script>
