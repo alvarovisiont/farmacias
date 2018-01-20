@@ -6,7 +6,7 @@
     <div class="row animated bounceInDown">
       <!-- Apply any bg-* class to to the icon to color it -->
         <div class="col-sm-3 col-md-3">
-            <div class="panel panel-primary">
+            <div class="panel panel-danger">
                 <div class="panel-heading">
                     <div class="row no-gutters">
                         <div class="col-md-3 col-sm-3">

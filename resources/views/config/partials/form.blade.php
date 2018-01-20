@@ -57,7 +57,7 @@
 				<div class="form-group">
 					<div class="col-md-4 col-sm-4 col-sm-offset-3 col-md-offset-3">
 						@if(Auth::user()->authorized())
-						<button type="submit" class="btn btn-block btn-danger">Guardar&nbsp;<i class="fa fa-send"></i></button>
+						<button type="submit" class="btn btn-block btn-success">Guardar&nbsp;<i class="fa fa-send"></i></button>
 						@endif
 					</div>
 					<div class="col-md-3 col-sm-3">

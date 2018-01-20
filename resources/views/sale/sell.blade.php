@@ -7,16 +7,16 @@
 		{{csrf_field()}}
 		
 		<!-- campos que se van a  guardar en el detalle de la venta -->
-		<input type="text" id="product_id" name="product_id">
-		<input type="text" id="id_temporal" name="id_temporal" value="0">
-		<input type="text" id="total" name="total" step="any" value="0">
-		<input type="text" id="iva_config_global" name="iva_config_global" value="{{ $validate ? $config->iva_porcentaje : '' }}">
+		<input type="hidden" id="product_id" name="product_id">
+		<input type="hidden" id="id_temporal" name="id_temporal" value="0">
+		<input type="hidden" id="total" name="total" step="any" value="0">
+		<input type="hidden" id="iva_config_global" name="iva_config_global" value="{{ $validate ? $config->iva_porcentaje : '' }}">
 		<!-- campo para la validación del producto y la construcción de la fila en la tabla de facturación -->
-		<input type="text" id="total_quantity">
-		<input type="text" id="validate_discount">
-		<input type="text" id="validate_iva">
-		<input type="text" id="validate_price">
-		<input type="text" id="total_respaldo" name="total_respaldo" step="any" value="0">
+		<input type="hidden" id="total_quantity">
+		<input type="hidden" id="validate_discount">
+		<input type="hidden" id="validate_iva">
+		<input type="hidden" id="validate_price">
+		<input type="hidden" id="total_respaldo" name="total_respaldo" step="any" value="0">
 
 		<div class="form-group">
 			<label for="cedula" class="control-label col-md-2 col-sm-2">Cédula</label>

@@ -33,7 +33,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
-					<button type="submit" class="btn btn-block btn-danger" id="btn_buscar">Buscar&nbsp;<i class="fa fa-send"></i></button>
+					<button type="submit" class="btn btn-block btn-primary" id="btn_buscar">Buscar&nbsp;<i class="fa fa-send"></i></button>
 				</div>
 			</div>
 		</form>		

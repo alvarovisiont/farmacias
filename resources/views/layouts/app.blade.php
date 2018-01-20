@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('plugins/datatables/dataTables.responsive.css')}}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/_all-skins.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap-datepicker3.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/animated.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
