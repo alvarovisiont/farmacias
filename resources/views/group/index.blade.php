@@ -41,6 +41,7 @@
             <table class="table table-bordered table-hover" id="table">
                 <thead>
                     <tr>
+                        <th class="text-center">Id</th>
                         <th class="text-center">Nombre</th>
                         <th class="text-center">Acción</th>
                     </tr>
@@ -48,6 +49,7 @@
                 <tbody class="text-center">
                     @foreach($group as $row)
                         <tr>
+                            <td>{{ $row->id }}</td>
                             <td>{{ $row->name }}</td>
                             @if(Auth::user()->authorized())
                                 <td>

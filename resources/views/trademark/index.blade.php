@@ -50,6 +50,7 @@
                 <tbody class="text-center">
                     @foreach($trademark as $row)
                         <tr>
+                            <td>{{ $row->id }}</td>
                             <td>{{ $row->name }}</td>
                             @if(Auth::user()->authorized())
                                 <td>

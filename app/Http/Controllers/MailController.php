@@ -22,6 +22,7 @@ class MailController extends Controller
     	if($email)
     	{
             $cifrado = bcrypt('reestablecer password');
+            $cifrado = str_replace('/', 'a', $cifrado);
 
 
     		$data = [

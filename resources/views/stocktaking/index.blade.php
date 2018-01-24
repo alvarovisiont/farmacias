@@ -52,6 +52,7 @@
             <table class="table table-bordered table-hover" id="table">
                 <thead>
                     <tr>
+                        <th class="text-center">Id</th>
                         <th class="text-center">Código</th>
                         <th class="text-center">Nombre</th>
                         <th class="text-center">Componente</th>
@@ -63,6 +64,7 @@
                 <tbody class="text-center">
                     @foreach($stock as $row)
                         <tr>
+                            <td>{{ $row->id }}</td>
                             <td>{{ $row->code_product }}</td>
                             <td>{{ $row->product }}</td>
                             <td>{{ $row->component }}</td>
