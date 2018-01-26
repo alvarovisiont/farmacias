@@ -13,7 +13,7 @@
                     @endif
                     {{csrf_field()}}
                         
-                    <input type="hidden" name="status" value="{{ $user->status ? $user->status : old('status') }}">
+                    <input type="hidden" name="status" value="{{ $user->status ? $user->status : 0 }}">
 
                     <div class="form-group{{ $errors->has('user') ? ' has-error' : '' }}">
                         <label for="user" class="col-md-4 control-label">User</label>

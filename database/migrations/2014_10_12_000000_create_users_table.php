@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->mediumInteger('estado');
             $table->mediumInteger('municipio');
             $table->mediumInteger('parroquia');
-            $table->smallInteger('status');
+            $table->smallInteger('status')->default(0);
             $table->text('token_validation')->nullable();
             $table->enum('type',[1,2]);
             $table->rememberToken();
