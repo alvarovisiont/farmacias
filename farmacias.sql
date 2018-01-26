@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-01-2018 a las 18:52:01
+-- Tiempo de generación: 26-01-2018 a las 04:41:06
 -- Versión del servidor: 10.1.28-MariaDB
 -- Versión de PHP: 7.1.11
 
@@ -38,13 +38,6 @@ CREATE TABLE `buys` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `buys`
---
-
-INSERT INTO `buys` (`id`, `user_id`, `pay_mode`, `total`, `iva_config`, `created_at`, `updated_at`) VALUES
-(1, 4, 'efectivo', 1100000.00, 0, '2018-01-10 04:39:53', '2018-01-10 04:39:53');
-
 -- --------------------------------------------------------
 
 --
@@ -63,14 +56,6 @@ CREATE TABLE `buy_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `buy_details`
---
-
-INSERT INTO `buy_details` (`id`, `buy_id`, `providers_id`, `stocktaking_id`, `user_id`, `quantity`, `price`, `total`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2, 4, 100, 1000.00, 100000.00, '2018-01-10 04:39:53', '2018-01-10 04:39:53'),
-(2, 1, 1, 1, 4, 100, 10000.00, 1000000.00, '2018-01-10 04:39:53', '2018-01-10 04:39:53');
 
 -- --------------------------------------------------------
 
@@ -109,16 +94,6 @@ CREATE TABLE `clients` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `clients`
---
-
-INSERT INTO `clients` (`id`, `users_id`, `cedula`, `name_complete`, `gender`, `address`, `number`, `email`, `created_at`, `updated_at`) VALUES
-(2, 4, 3886100, 'Domingo Antonio Guedez Cresp', 'masculino', 'Ciudad Jardín Calle 3-9 casa # 6', '04144636869', 'alvaro.develoop@gmail.com', '2017-12-30 00:06:11', '2017-12-30 00:06:11'),
-(3, 4, 21202500, 'Alvaro Antonio Guedez Crespo', 'femenino', 'Ciudad Jardín', '04124362753', NULL, '2017-12-30 03:10:54', '2017-12-30 03:10:54'),
-(4, 4, 4825451, 'Norma Milagros', 'femenino', 'Ciudad Jardín calle 3-9 casa # 6', '04161371687', NULL, '2018-01-16 04:43:45', '2018-01-16 04:43:45'),
-(5, 4, 24420507, 'Argenis Guedez', 'masculino', 'Ciudad Jardion', '04262350800', 'argenis_guedez192@hotmail.com', '2018-01-16 04:46:40', '2018-01-16 04:46:40');
-
 -- --------------------------------------------------------
 
 --
@@ -138,13 +113,6 @@ CREATE TABLE `configs` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `configs`
---
-
-INSERT INTO `configs` (`id`, `nombre_farmacia`, `director`, `director_number`, `director_email`, `logo`, `iva_porcentaje`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Farmacía Sass', 'Alvaro Guedez', '04124362753', 'alvaro.develoop@gmail.com', '1515631118.jpg', 12, 4, '2017-12-29 03:52:45', '2018-01-11 04:38:38');
-
 -- --------------------------------------------------------
 
 --
@@ -159,14 +127,6 @@ CREATE TABLE `config_currencies` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `config_currencies`
---
-
-INSERT INTO `config_currencies` (`id`, `percentage`, `type`, `users_id`, `created_at`, `updated_at`) VALUES
-(1, 12.00, '1', 4, '2017-12-28 23:23:02', '2017-12-28 23:23:02'),
-(2, 10.00, '2', 4, '2017-12-28 23:23:48', '2017-12-28 23:23:48');
 
 -- --------------------------------------------------------
 
@@ -186,42 +146,6 @@ CREATE TABLE `detail_sales` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `detail_sales`
---
-
-INSERT INTO `detail_sales` (`id`, `sales_id`, `products_id`, `price`, `config_currencies_iva`, `config_currencies_discount`, `quantity`, `total`, `created_at`, `updated_at`) VALUES
-(1, 3, 2, 5000.00, 0, 0, 1000, 5000000.00, '2017-12-30 03:06:51', '2017-12-30 03:06:51'),
-(2, 3, 1, 20000.00, 12, 10, 50, 1008000.00, '2017-12-30 03:06:51', '2017-12-30 03:06:51'),
-(3, 4, 1, 20000.00, 12, 10, 5, 100800.00, '2017-12-30 03:10:54', '2017-12-30 03:10:54'),
-(4, 4, 2, 5000.00, 0, 0, 1, 5000.00, '2017-12-30 03:10:54', '2017-12-30 03:10:54'),
-(5, 5, 1, 20000.00, 12, 10, 5, 100800.00, '2017-12-30 03:16:25', '2017-12-30 03:16:25'),
-(6, 5, 2, 5000.00, 0, 0, 9, 45000.00, '2017-12-30 03:16:25', '2017-12-30 03:16:25'),
-(7, 6, 2, 5000.00, 0, 0, 10, 50000.00, '2017-12-30 03:22:31', '2017-12-30 03:22:31'),
-(8, 6, 1, 20000.00, 12, 10, 10, 201600.00, '2017-12-30 03:22:32', '2017-12-30 03:22:32'),
-(9, 7, 2, 5000.00, 0, 0, 10, 50000.00, '2017-12-30 03:24:27', '2017-12-30 03:24:27'),
-(10, 7, 1, 20000.00, 12, 10, 10, 201600.00, '2017-12-30 03:24:28', '2017-12-30 03:24:28'),
-(11, 8, 2, 5000.00, 0, 0, 20, 100000.00, '2017-12-30 03:26:41', '2017-12-30 03:26:41'),
-(12, 8, 1, 20000.00, 12, 10, 1, 20160.00, '2017-12-30 03:26:41', '2017-12-30 03:26:41'),
-(13, 9, 2, 5000.00, 0, 0, 50, 250000.00, '2017-12-30 03:28:04', '2017-12-30 03:28:04'),
-(14, 9, 1, 20000.00, 12, 10, 19, 383040.00, '2017-12-30 03:28:05', '2017-12-30 03:28:05'),
-(15, 10, 2, 5000.00, 0, 0, 5, 25000.00, '2018-01-11 19:40:52', '2018-01-11 19:40:52'),
-(16, 10, 1, 20000.00, 12, 10, 10, 201600.00, '2018-01-11 19:40:52', '2018-01-11 19:40:52'),
-(17, 11, 1, 20000.00, 12, 10, 2, 40320.00, '2018-01-16 04:43:45', '2018-01-16 04:43:45'),
-(18, 11, 2, 5000.00, 0, 0, 2, 10000.00, '2018-01-16 04:43:46', '2018-01-16 04:43:46'),
-(19, 12, 1, 20000.00, 12, 10, 2, 40320.00, '2018-01-16 04:44:34', '2018-01-16 04:44:34'),
-(20, 12, 2, 5000.00, 0, 0, 10, 50000.00, '2018-01-16 04:44:34', '2018-01-16 04:44:34'),
-(21, 13, 1, 20000.00, 12, 10, 1, 20160.00, '2018-01-16 04:45:42', '2018-01-16 04:45:42'),
-(22, 14, 2, 5000.00, 0, 0, 10, 50000.00, '2018-01-16 04:46:40', '2018-01-16 04:46:40'),
-(23, 10, 1, 5000.00, 12, 0, 5, 28000.00, '2018-01-17 06:02:18', '2018-01-17 06:02:18'),
-(69, 69, 2, 10000.00, 0, 3, 1, 10000.00, '2018-01-17 08:21:58', '2018-01-17 08:21:58'),
-(70, 70, 7, 35000.00, 0, 0, 2, 70000.00, '2018-01-17 08:21:59', '2018-01-17 08:21:59'),
-(71, 71, 2, 5000.00, 0, 0, 1, 5000.00, '2018-01-18 01:28:07', '2018-01-18 01:28:07'),
-(72, 72, 7, 15000.00, 0, 0, 5, 75000.00, '2018-01-18 01:29:03', '2018-01-18 01:29:03'),
-(73, 73, 1, 20000.00, 12, 10, 1, 20160.00, '2018-01-18 01:30:12', '2018-01-18 01:30:12'),
-(74, 73, 2, 5000.00, 0, 0, 1, 5000.00, '2018-01-18 01:30:12', '2018-01-18 01:30:12'),
-(75, 73, 7, 15000.00, 0, 0, 1, 15000.00, '2018-01-18 01:30:13', '2018-01-18 01:30:13');
 
 -- --------------------------------------------------------
 
@@ -281,13 +205,6 @@ CREATE TABLE `groups` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `groups`
---
-
-INSERT INTO `groups` (`id`, `name`, `users_id`, `created_at`, `updated_at`) VALUES
-(1, 'Pastillas', 4, '2017-12-28 23:12:23', '2017-12-28 23:12:23');
-
 -- --------------------------------------------------------
 
 --
@@ -305,21 +222,21 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(26, '2017_12_26_015330_create_providers_table', 2),
-(35, '2017_12_26_211420_create_configs_table', 3),
-(36, '2017_12_27_000230_create_trademarks_table', 3),
-(37, '2017_12_27_000500_create_groups_table', 3),
-(38, '2017_12_27_005150_create_config_currencies_table', 3),
-(52, '2017_12_27_230722_create_stocktakings_table', 4),
-(53, '2017_12_28_172525_create_clients_table', 4),
-(64, '2017_12_28_172554_create_sales_table', 5),
-(65, '2017_12_29_180021_create_detail_sales_table', 5),
-(66, '2017_12_29_180306_create_temp_sales_table', 5),
-(76, '2018_01_09_172328_create_buys_table', 6),
-(77, '2018_01_09_225843_create_buy_details_table', 6),
-(78, '2018_01_09_232916_create_buy_temporals_table', 6);
+(92, '2014_10_12_000000_create_users_table', 1),
+(93, '2014_10_12_100000_create_password_resets_table', 1),
+(94, '2017_12_26_015330_create_providers_table', 1),
+(95, '2017_12_26_211420_create_configs_table', 1),
+(96, '2017_12_27_000230_create_trademarks_table', 1),
+(97, '2017_12_27_000500_create_groups_table', 1),
+(98, '2017_12_27_005150_create_config_currencies_table', 1),
+(99, '2017_12_27_230722_create_stocktakings_table', 1),
+(100, '2017_12_28_172525_create_clients_table', 1),
+(101, '2017_12_28_172554_create_sales_table', 1),
+(102, '2017_12_29_180021_create_detail_sales_table', 1),
+(103, '2017_12_29_180306_create_temp_sales_table', 1),
+(104, '2018_01_09_172328_create_buys_table', 1),
+(105, '2018_01_09_225843_create_buy_details_table', 1),
+(106, '2018_01_09_232916_create_buy_temporals_table', 1);
 
 -- --------------------------------------------------------
 
@@ -1863,13 +1780,6 @@ CREATE TABLE `providers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `providers`
---
-
-INSERT INTO `providers` (`id`, `name`, `number`, `email`, `address`, `rif`, `users_id`, `created_at`, `updated_at`) VALUES
-(1, 'Bayer', '02122365874', 'alvaro.develoop@gmail.com', 'Caracas', 'J-21202500', 4, '2017-12-27 23:07:57', '2017-12-27 23:09:25');
-
 -- --------------------------------------------------------
 
 --
@@ -1889,29 +1799,6 @@ CREATE TABLE `sales` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `sales`
---
-
-INSERT INTO `sales` (`id`, `users_id`, `clients_id`, `invoice`, `pay_mode`, `iva_config_global`, `total`, `id_temporal`, `created_at`, `updated_at`) VALUES
-(3, 4, 2, '2017120001', 'punto', 12, 5287040.00, 0, '2017-12-30 03:06:50', '2018-01-17 08:22:00'),
-(4, 4, 3, '2017120004', 'punto', 12, 93104.00, 0, '2017-12-30 03:10:54', '2018-01-17 08:22:00'),
-(5, 4, 3, '2017120005', 'efectivo', 0, 145800.00, 0, '2017-12-30 03:16:25', '2018-01-17 08:22:00'),
-(6, 4, 3, '2017120006', 'punto', 12, 221408.00, 0, '2017-12-30 03:22:31', '2018-01-17 08:22:00'),
-(7, 4, 3, '2017120007', 'punto', 12, 221408.00, 0, '2017-12-30 03:24:27', '2018-01-17 08:22:00'),
-(8, 4, 3, '2017120008', 'punto', 12, 105740.80, 0, '2017-12-30 03:26:41', '2018-01-17 08:22:00'),
-(9, 4, 2, '2017120009', 'efectivo', 0, 633040.00, 0, '2017-12-30 03:28:04', '2018-01-17 08:22:00'),
-(10, 4, 3, '20180100010', 'efectivo', 0, 226600.00, 0, '2018-01-11 19:40:52', '2018-01-17 08:22:00'),
-(11, 4, 4, '20180100011', 'efectivo', 0, 50320.00, 0, '2018-01-16 04:43:45', '2018-01-17 08:22:00'),
-(12, 4, 4, '20180100012', 'punto', 12, 123763.20, 0, '2018-01-16 04:44:34', '2018-01-17 08:22:00'),
-(13, 4, 4, '20180100013', 'punto', 12, 17740.80, 0, '2018-01-16 04:45:42', '2018-01-17 08:22:00'),
-(14, 4, 5, '20180100014', 'efectivo', 0, 70160.00, 0, '2018-01-16 04:46:40', '2018-01-17 08:22:00'),
-(69, 4, 3, '20180100060', 'punto', 12, 10000.00, 0, '2018-01-17 08:21:54', '2018-01-17 08:22:00'),
-(70, 4, 4, '20171200054', 'efectivo', 0, 70000.00, 0, '2018-01-17 08:21:55', '2018-01-17 08:22:00'),
-(71, 4, 5, '20180100071', 'punto', 12, 4400.00, 0, '2018-01-18 01:28:07', '2018-01-18 01:28:07'),
-(72, 4, 3, '20180100072', 'punto', 12, 66000.00, 0, '2018-01-18 01:29:02', '2018-01-18 01:29:02'),
-(73, 4, 2, '20180100073', 'punto', 12, 35340.80, 0, '2018-01-18 01:30:11', '2018-01-18 01:30:11');
-
 -- --------------------------------------------------------
 
 --
@@ -1924,7 +1811,7 @@ CREATE TABLE `stocktakings` (
   `trademarks_id` int(10) UNSIGNED NOT NULL,
   `groups_id` int(10) UNSIGNED NOT NULL,
   `users_id` int(10) UNSIGNED NOT NULL,
-  `code_product` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code_product` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `component` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '',
   `quantity` int(11) NOT NULL,
@@ -1937,15 +1824,6 @@ CREATE TABLE `stocktakings` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `stocktakings`
---
-
-INSERT INTO `stocktakings` (`id`, `providers_id`, `trademarks_id`, `groups_id`, `users_id`, `code_product`, `product`, `component`, `quantity`, `price`, `buying_price_provider`, `buying_date`, `config_currencies_iva_id`, `config_currencies_discount_id`, `date_of_expense`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 4, '01-05', 'Pastilla Bayer 300 ml', 'acetaminofen', 2, 20000.00, 10000.00, '2017-12-12', 1, 2, '2020-01-01', '2017-12-29 23:02:06', '2018-01-18 01:30:12'),
-(2, 1, 1, 1, 4, '00-1', 'Inyectadora', NULL, 238, 5000.00, 1000.00, '2017-12-08', 0, 0, '2021-01-01', '2017-12-29 23:02:38', '2018-01-18 01:30:12'),
-(7, 1, 1, 1, 4, '00-2', 'Dilantyl 300 ml', 'fenitoina', 464, 15000.00, 10000.00, '2017-07-12', 0, 0, '2018-05-01', '2018-01-16 23:46:07', '2018-01-18 01:30:13');
 
 -- --------------------------------------------------------
 
@@ -1980,13 +1858,6 @@ CREATE TABLE `trademarks` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `trademarks`
---
-
-INSERT INTO `trademarks` (`id`, `name`, `users_id`, `created_at`, `updated_at`) VALUES
-(1, 'Bayer', 4, '2017-12-28 23:12:09', '2017-12-28 23:12:09');
-
 -- --------------------------------------------------------
 
 --
@@ -1996,16 +1867,16 @@ INSERT INTO `trademarks` (`id`, `name`, `users_id`, `created_at`, `updated_at`) 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `user` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nombre_farmacia` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nivel` enum('1','2') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rol` smallint(6) NOT NULL,
+  `rol` enum('1','2') COLLATE utf8mb4_unicode_ci NOT NULL,
   `estado` mediumint(9) NOT NULL,
   `municipio` mediumint(9) NOT NULL,
   `parroquia` mediumint(9) NOT NULL,
-  `status` smallint(6) NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '0',
   `token_validation` text COLLATE utf8mb4_unicode_ci,
-  `type` tinyint(4) NOT NULL,
+  `type` enum('1','2') COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -2016,8 +1887,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `user`, `password`, `nombre_farmacia`, `nivel`, `rol`, `estado`, `municipio`, `parroquia`, `status`, `token_validation`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '$2y$10$55Ad0IsbcrMVb1hsXAi0Y.BuMPNxbe8hGULZqXE6VTbvbQzU2v462', 'farmatodo', '1', 1, 4, 6, 1126, 0, NULL, 1, 'IYalWhMzoEnqwUZl6bPEP7UgBikjHKckWB0BY1TqvvMqux5FaZGUlPsvMvV7', '2017-12-26 03:24:35', '2017-12-26 03:24:35'),
-(4, 'sass', '$2y$10$5yZlzMOUTTRmKFSZVCvC0u8bjgQk.0BuFkbEJGrs/xsz3kS45/VOq', 'Sass', '2', 1, 1, 1, 439, 1, '$2y$10$ilPmJeCj6vQD4.QbvTplpe6oU/avuV60XgPSwsnLKnGR4RnHNCPXG', 2, '1U16IijbALetsa6jZStiN9sYtrtkbYZH3MCtTk2eFtXsaXnBhs98MLIsjFVw', '2017-12-27 01:11:06', '2018-01-19 04:00:21');
+(1, 'admin', '$2y$10$S9MakqcrGkEM3nWNx8n8SOyeRWxRrifIvpRhpB9UmkYCtfh02IKg6', 'farmatodo', '1', '1', 4, 6, 1126, 0, NULL, '', 'MejELUC8NbcAx1ILZfE4oig2YoaWEk9C6msYBf1PWU6seu7suQuz8TeHb4Vl', '2018-01-25 04:00:00', '2018-01-25 04:00:00');
 
 --
 -- Índices para tablas volcadas
@@ -2150,13 +2020,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `buys`
 --
 ALTER TABLE `buys`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `buy_details`
 --
 ALTER TABLE `buy_details`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `buy_temporals`
@@ -2168,55 +2038,55 @@ ALTER TABLE `buy_temporals`
 -- AUTO_INCREMENT de la tabla `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
 --
 ALTER TABLE `configs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `config_currencies`
 --
 ALTER TABLE `config_currencies`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detail_sales`
 --
 ALTER TABLE `detail_sales`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT de la tabla `providers`
 --
 ALTER TABLE `providers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `stocktakings`
 --
 ALTER TABLE `stocktakings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `temp_sales`
@@ -2228,13 +2098,13 @@ ALTER TABLE `temp_sales`
 -- AUTO_INCREMENT de la tabla `trademarks`
 --
 ALTER TABLE `trademarks`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
